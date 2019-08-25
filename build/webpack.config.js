@@ -2,18 +2,18 @@ const path = require('path')
 
 module.exports = {
     entry: {
-        'wen-design': './lib/index.tsx'
+        'wen-design': '../lib/index.tsx'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
-            icons: path.resolve(__dirname, 'icons'),
-            utils: path.resolve(__dirname, 'utils'),
-            src: path.resolve(__dirname, 'src')
+            icons: path.resolve(__dirname, '../icons'),
+            utils: path.resolve(__dirname, '../utils'),
+            src: path.resolve(__dirname, '../src')
         }
     },
     output: {
-        path: path.resolve(__dirname, 'dist/lib'),
+        path: path.resolve(__dirname, '../dist/lib'),
         library: 'wings-ui',
         libraryTarget: 'umd'
     },
