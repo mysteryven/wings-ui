@@ -3,6 +3,7 @@ import '../index.scss';
 import Aside from "../Aside";
 import Main from "../Main";
 import MobileView from "../MobileView";
+import {HashRouter} from "react-router-dom";
 
 const App = () => {
   return (
@@ -10,9 +11,11 @@ const App = () => {
       <div className={"w-header"}>
       </div>
       <div className={"w-container"}>
-        <Aside/>
-        <Main/>
-        <MobileView/>
+        <HashRouter>
+          <Aside/>
+          <Main/>
+          <MobileView/>
+        </HashRouter>
       </div>
     </div>
   )
