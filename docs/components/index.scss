@@ -1,0 +1,46 @@
+$header-height: 60px;
+$side-width: 210px;
+
+body {
+  margin: 0;
+}
+.w-header {
+  position: fixed;
+  width: 100vw;
+  height: $header-height;
+  background: #001838;
+}
+
+.w-container {
+  padding-top: $header-height;
+  background-color: #ddd;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  .w-aside {
+    position: fixed;
+    height: calc(100vh - #{$header-height});
+    top: 60px;
+    width: $side-width;
+    overflow: auto;
+    background-color: #ffffff;
+  }
+  .w-main {
+    flex-grow: 1;
+    min-width: 375px;
+    margin: 0 440px 0 calc(#{$side-width} + 20px);
+    background-color: blue;
+    height: 300vh;
+  }
+  .w-mobile-view {
+    position: fixed;
+    top: 80px;
+    right: 40px;
+    width: 280px;
+    height: 562px;
+    border: 2px solid red;
+  }
+}
+
+
