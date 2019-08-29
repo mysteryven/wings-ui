@@ -5,6 +5,8 @@ module.exports = Object.assign({}, base, {
     mode: 'production', //production
     output: {
         path: path.resolve(__dirname, './dist'),
+        library: 'wings-ui',
+        libraryTarget: 'umd'
     },
     externals: {
         react: {

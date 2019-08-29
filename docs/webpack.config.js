@@ -16,6 +16,11 @@ module.exports = {
             components: path.resolve(__dirname, './components')
         }
     },
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        library: 'wings-ui',
+        libraryTarget: 'umd'
+    },
     module: {
         rules: [
             {

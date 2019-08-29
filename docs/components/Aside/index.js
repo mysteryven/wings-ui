@@ -30,7 +30,6 @@ const Aside = () => {
       setPageName(getHashName());
       setTimeout(() => {
         document.querySelectorAll("pre code").forEach(block => {
-          console.log(1);
           hljs.highlightBlock(block);
         });
 
