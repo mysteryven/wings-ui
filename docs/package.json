@@ -3,7 +3,7 @@
   "description": "",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js",
-    "build:docs": "cross-env NODE_ENV=development webpack --config build/webpack.config.dev.js"
+    "build": "cross-env NODE_ENV=development webpack --config webpack.config.prod.js"
   },
   "dependencies": {
     "highlight.js": "^9.15.10",

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
-        'wen-design': './index.js'
+        'wing-doc': './index.js'
     },
     plugins: [
         new HtmlWebpackPlugin({
