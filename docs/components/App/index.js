@@ -5,14 +5,14 @@ import '../index.scss';
 import Aside from "../Aside";
 import Main from "../Main";
 import MobileView from "../MobileView";
-import './code.scss'
 
 const App = () => {
   useEffect(() => {
+    hljs.initHighlightingOnLoad();
     document.querySelectorAll("pre code").forEach(block => {
       hljs.highlightBlock(block);
     });
-  })
+  }, [])
 
   return (
     <div>

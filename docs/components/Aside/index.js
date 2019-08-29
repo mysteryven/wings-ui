@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import hljs from 'highlight.js';
 import './index.scss';
 
 /**
@@ -27,6 +28,13 @@ const Aside = () => {
     onClick: () => {
       // 只是为了让本地的 pageName 和路由的 hash 同步
       setPageName(getHashName());
+      setTimeout(() => {
+        document.querySelectorAll("pre code").forEach(block => {
+          console.log(1);
+          hljs.highlightBlock(block);
+        });
+
+      })
     },
   };
 
@@ -35,20 +43,20 @@ const Aside = () => {
   }
 
   const lists = [
-    {path: 'button', name: 'Button 按钮'},
-    {path: 'Modal', name: 'Modal 弹窗'}
+    { path: 'button', name: 'Button 按钮' },
+    { path: 'Modal', name: 'Modal 弹窗' }
   ];
 
   return (
     <div className={"w-aside"}>
       <ul>
-          {
-            lists.map(({path, name}) => (
-              <li key={path}>
-                <WLink path={path} {...wLinkConfig}>{name}</WLink>
-              </li>
-            ))
-          }
+        {
+          lists.map(({ path, name }) => (
+            <li key={path}>
+              <WLink path={path} {...wLinkConfig}>{name}</WLink>
+            </li>
+          ))
+        }
       </ul>
     </div>
   )
