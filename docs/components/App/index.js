@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import hljs from 'highlight.js';
+import {HashRouter} from "react-router-dom";
 import '../index.scss';
 import Aside from "../Aside";
 import Main from "../Main";
 import MobileView from "../MobileView";
-import {HashRouter} from "react-router-dom";
+import './code.scss'
 
 const App = () => {
+  useEffect(() => {
+    document.querySelectorAll("pre code").forEach(block => {
+      hljs.highlightBlock(block);
+    });
+  })
+
   return (
     <div>
       <div className={"w-header"}>

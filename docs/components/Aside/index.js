@@ -44,8 +44,8 @@ const Aside = () => {
       <ul>
           {
             lists.map(({path, name}) => (
-              <li>
-                <WLink key={path} path={path} {...wLinkConfig}>{name}</WLink>
+              <li key={path}>
+                <WLink path={path} {...wLinkConfig}>{name}</WLink>
               </li>
             ))
           }

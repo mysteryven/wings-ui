@@ -1,11 +1,13 @@
 import React from 'react';
 import Pane from 'components/Pane'; 
+import ButtonMd from './button.md';
+
+console.log(ButtonMd);
 
 const ButtonDoc = () => {
   return (
     <div>
-      我是按钮
-      <Pane />
+      <Pane content={ButtonMd} />
     </div>
   )
 }
