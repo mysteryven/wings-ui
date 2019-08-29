@@ -1,8 +1,12 @@
 import React from "react";
+import { Route } from "react-router-dom";
+import ButtonExample from './ButtonExample'
 
-const Main = () => {
+const Main = (props) => {
   return (
-    <div className={"w-main"}>Main</div>
+    <div className={"w-main"}>
+       <Route path="/button" component={ButtonExample} /> 
+    </div>
   )
 };
 
