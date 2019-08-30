@@ -20,6 +20,9 @@ $warning: #ff4444;
             background-color: $grey;
         }
     }
+    &.w-full {
+        width: 100%;
+    }
     &.primary {
        background-color: $primary; 
        color: white;

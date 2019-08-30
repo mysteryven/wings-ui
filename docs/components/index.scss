@@ -13,6 +13,7 @@ body {
 
 .w-container {
   padding-top: $header-height;
+  box-sizing: border-box;
   background-color: #ddd;
   height: 100vh;
   overflow: auto;
@@ -36,9 +37,8 @@ body {
     position: fixed;
     top: 80px;
     right: 40px;
-    width: 280px;
+    width: 300px;
     height: 562px;
-    border: 2px solid red;
   }
 }
 

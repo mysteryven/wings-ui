@@ -9,15 +9,17 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   disabled?: boolean;
   loading?: boolean;
+  full?: boolean;
 }
 
 const Button: FunctionComponent<ButtonProps> = (props) => {
-  const { className, theme, onClick, disabled, loading, ...restProps } = props;
+  const { className, theme, onClick, disabled, loading, full, ...restProps } = props;
   const btnClasses = sc(
     'w-button',
     className,
     theme,
-    disabled ? 'w-disabled' : ''
+    disabled ? 'w-disabled' : '',
+    full ? 'w-full' : ''
   );
 
   function onButtonClick(e: MouseEvent<HTMLButtonElement>): void {

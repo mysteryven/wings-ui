@@ -1,13 +1,32 @@
-## 第一个属性
+### theme - 按钮类型
 
-展示一下
+按钮类型有以下三种
 
-```js
-var a = 1
+```html
+<Button>Hello</Button>
+<Button theme="primary">Hello</Button>
+<Button theme="warning">Hello</Button>
 ```
 
 {||}
 
-## 第二个
+### disabled - 禁用状态
 
-展示 
+通过指定 `disabled` 属性来设置禁用状态，这个时候按钮的点击事件不生效
+
+```html
+<Button disabled>Hello</Button>
+<Button theme="primary" disabled>Hello</Button>
+<Button theme="warning" disabled>Hello</Button>
+```
+
+{||}
+
+### full
+
+快捷的让按钮的宽度为 100%
+```html
+<Button full>Hello</Button>
+<Button theme="primary" full>Hello</Button>
+<Button theme="warning" full>Hello</Button>
+```

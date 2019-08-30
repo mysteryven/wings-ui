@@ -51,6 +51,13 @@ describe('Button', () => {
     const component = findByTestAttr(wrapper, 'w-disabled');
     expect(component.length).toBe(1);
   })
+  it('can accept `full` props', () => {
+    const wrapper = setup({
+      full: true
+    });
+    const component = findByTestAttr(wrapper, 'w-full');
+    expect(component.length).toBe(1);
+  })
   it('canot handle onClick when disabled', () => {
     const fn = jest.fn();
     const wrapper = setup({
