@@ -5,11 +5,12 @@ $warning: #ff4444;
 
 .w-button {
     padding: 0.4em 0.6em;
+    position: relative; 
     background-color: white;
     outline: none;
     border-radius: $border-radius;
     border: 1px solid $grey;
-    &:active {
+    &:active:not(.w-loading) {
         background-color: darken($color: $grey, $amount: 10)
     }
     &.w-disabled {
@@ -27,7 +28,7 @@ $warning: #ff4444;
        background-color: $primary; 
        color: white;
        border: none;
-       &:active {
+       &:active:not(.w-loading):not(.w-disabled) {
          background-color: darken($color: $primary, $amount: 10)
        }
        &.w-disabled {
@@ -38,11 +39,52 @@ $warning: #ff4444;
        background-color: $warning; 
        color: white;
        border: none;
-       &:active {
+       &:active:not(.w-loading):not(.w-disabled) {
         background-color: darken($color: $warning, $amount: 20)
        }
         &.w-disabled {
          background-color: lighten($color: $warning, $amount: 10)
        }
     }
+    
+}
+.w-loading-icon-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.w-loading-icon {
+  width: 1.2em;
+  height: 1.2em;
+  animation: icon-loading 1s linear infinite;
+}
+
+.w-loading.w-button {
+  .w-button-inner {
+    filter: blur(1px);
+  }
+
+  .w-loading-icon-wrapper {
+    display: flex;
+  }
+
+}
+
+
+@keyframes icon-loading {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }

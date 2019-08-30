@@ -30,3 +30,15 @@
 <Button theme="primary" full>Hello</Button>
 <Button theme="warning" full>Hello</Button>
 ```
+
+{||}
+
+## loading - 加载状态
+
+设置 loading 状态，此时 `onClick` 事件同样不生效
+
+```html
+<Button full loading>Hello</Button>
+<Button theme="primary" full loading>Hello</Button>
+<Button theme="warning" full loading>Hello</Button>
+```

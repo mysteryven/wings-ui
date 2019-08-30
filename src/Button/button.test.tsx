@@ -58,6 +58,16 @@ describe('Button', () => {
     const component = findByTestAttr(wrapper, 'w-full');
     expect(component.length).toBe(1);
   })
+  it('can accept `loading` props', () => {
+    const wrapper = setup({
+      loading: true
+    })
+    const component1 = findByTestAttr(wrapper, 'w-loading');
+    const component2 = findByTestAttr(wrapper, 'w-loading-icon-wrapper');
+    expect(component1.length).toBe(1);
+    expect(component2.length).toBe(1);
+
+  })
   it('canot handle onClick when disabled', () => {
     const fn = jest.fn();
     const wrapper = setup({

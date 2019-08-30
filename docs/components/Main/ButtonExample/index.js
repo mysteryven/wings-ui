@@ -23,6 +23,12 @@ const ButtonDoc = () => {
         <Button className={"item"} theme="primary" full>Hello</Button>
         <Button className={"item"} theme="warning" full>Hello</Button>
       </div>
+      <p>loading 加载中</p>
+      <div className={"buttonWrapper"}>
+        <Button className={"item"} full loading loading>Hello</Button>
+        <Button className={"item"} theme="primary" full loading>Hello</Button>
+        <Button className={"item"} theme="warning" full loading>Hello</Button>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent, MouseEvent } from 'react';
+import Icon from '../Icon';
 import sc from '../utils/classname';
 import './index.scss';
 
@@ -19,7 +20,8 @@ const Button: FunctionComponent<ButtonProps> = (props) => {
     className,
     theme,
     disabled ? 'w-disabled' : '',
-    full ? 'w-full' : ''
+    full ? 'w-full' : '',
+    loading ? 'w-loading' : ''
   );
 
   function onButtonClick(e: MouseEvent<HTMLButtonElement>): void {
@@ -28,12 +30,27 @@ const Button: FunctionComponent<ButtonProps> = (props) => {
     }
   }
 
+  const iconWrapper = loading ?
+    (
+      <div className="w-loading-icon-wrapper">
+        <Icon name="loading" className="w-loading-icon" />
+      </div>
+    )
+    :
+    '';
+
+
   return (
     <button className={btnClasses} onClick={onButtonClick} {...restProps}>
-      {props.children}
+      {iconWrapper}
+      <span className={"w-button-inner"}>
+        {props.children}
+      </span>
     </button>
   );
 };
-export default Button; Button.defaultProps = {
+export default Button;
+
+Button.defaultProps = {
   theme: 'default',
 };
