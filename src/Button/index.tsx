@@ -4,7 +4,7 @@ import sc from '../utils/classname';
 import './index.scss';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  theme?: 'primary' | 'default';
+  theme?: 'primary' | 'default' | "warning";
   onClick?: React.MouseEventHandler;
   className?: string;
   disabled?: boolean;

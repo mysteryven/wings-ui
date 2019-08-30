@@ -1,11 +1,45 @@
 $grey: #ddd;
+$border-radius: 2px;
+$primary: #1989fa;
+$warning: #ff4444;
 
 .w-button {
     padding: 0.4em 0.6em;
     background-color: white;
     outline: none;
+    border-radius: $border-radius;
     border: 1px solid $grey;
     &:active {
-        background-color: darken($color: $grey, $amount: 0)
+        background-color: darken($color: $grey, $amount: 10)
+    }
+    &.w-disabled {
+        background: $grey;
+        color: white;
+        cursor: not-allowed;
+        &:active {
+            background-color: $grey;
+        }
+    }
+    &.primary {
+       background-color: $primary; 
+       color: white;
+       border: none;
+       &:active {
+         background-color: darken($color: $primary, $amount: 10)
+       }
+       &.w-disabled {
+         background-color: lighten($color: $primary, $amount: 20)
+       }
+    }
+    &.warning {
+       background-color: $warning; 
+       color: white;
+       border: none;
+       &:active {
+        background-color: darken($color: $warning, $amount: 20)
+       }
+        &.w-disabled {
+         background-color: lighten($color: $warning, $amount: 10)
+       }
     }
 }
