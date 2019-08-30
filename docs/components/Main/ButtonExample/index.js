@@ -1,9 +1,10 @@
 import React from 'react';
+import Button from '../../../../src/Button'
 
 const ButtonDoc = () => {
   return (
     <div>
-      <button>Hi, there</button>       
+      <Button>Hi, there</Button>       
     </div>
   )
 }

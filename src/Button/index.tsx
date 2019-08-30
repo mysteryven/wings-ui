@@ -1,9 +1,14 @@
 import * as React from 'react';
+import {FunctionComponent} from 'react';
 
-const Button = () => {
-  return (
-    <button>I'm Button</button>
-  )
+interface ButtonProps {
+  type?: 'primary' | 'default';
 }
+
+const Button: FunctionComponent<ButtonProps> = () => {
+  return (
+    <button className={'w-button'}>I'm Button</button>
+  );
+};
 
 export default Button;
