@@ -1,0 +1,11 @@
+$grey: #ddd;
+
+.w-button {
+    padding: 0.4em 0.6em;
+    background-color: white;
+    outline: none;
+    border: 1px solid $grey;
+    &:active {
+        background-color: darken($color: $grey, $amount: 0)
+    }
+}
