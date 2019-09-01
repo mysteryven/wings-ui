@@ -6,11 +6,17 @@
  * This work is licensed under the Creative Commons CC0 1.0 Universal License
  */
 
+
 /* Comment */
 .hljs-comment,
 .hljs-quote {
   color: #989498;
 }
+
+.hljs-tag {
+  margin-bottom: 4px;
+}
+
 
 /* Red */
 .hljs-variable,

@@ -8,6 +8,7 @@ import './index.scss';
  * @param {string} props.pageName
  * @param {Function} props.onClick
  * @param {string} props.path
+ * @param {React.Element} props.children
  * */
 const WLink = (props) => {
   return (
@@ -42,8 +43,9 @@ const Aside = () => {
   }
 
   const lists = [
+    { path: '', name: 'Introduction 介绍' },
     { path: 'button', name: 'Button 按钮' },
-    { path: 'Modal', name: 'Modal 弹窗' }
+    { path: 'transition', name: 'transition 过渡' }
   ];
 
   return (

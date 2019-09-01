@@ -17,7 +17,7 @@
 预览的网页在 `docs` 文件夹内
 ```
 cd docs  
-yarn  
+yarn install 
 yarn start
 ```
 
