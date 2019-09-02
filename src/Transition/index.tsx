@@ -7,7 +7,6 @@ interface TransitionProps {
 }
 
 const Transition: FunctionComponent<TransitionProps> = (props) => {
-
   return (
     <div className={"w-transition"}>
       hi
