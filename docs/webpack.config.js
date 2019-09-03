@@ -13,7 +13,9 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
-            components: path.resolve(__dirname, './components')
+            components: path.resolve(__dirname, './components'),
+            react: path.resolve(__dirname, '../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../node_modules/react-dom')
         }
     },
     output: {

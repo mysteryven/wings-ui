@@ -4,11 +4,21 @@ import React from "react";
 const TransitionExample = () => {
   return (
     <div>
-      <Transition before={{
-        marginLeft: '10px'
-      }} after={{
-        marginLeft: '-10px'
-      }}/>
+      <Transition
+        beforeEnter={{
+        marginLeft: '10px',
+      }}
+        afterEnter={{
+          color: 'red',
+        marginLeft: '100px'
+      }}
+        enterActive={{
+          transition: 'all 3s',
+        }}
+
+      >
+        <div>2</div>
+      </Transition>
     </div>
   )
 };
