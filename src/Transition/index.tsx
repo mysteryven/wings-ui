@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from 'react'
 import { CSSProperties, FunctionComponent } from "react";
-import { compose } from '../utils/fp';
+import {compose, pipe} from '../utils/fp';
 import './index.scss';
 
 interface TransitionProps {
@@ -24,21 +24,17 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
       const div = divEl.current as HTMLDivElement;
       saveStyle(child.props.style);
 
-      const preSetEnterActive = productStyle(
-        { display: 'none' },
+      const preEnterStyle = productStyle(
         child.props.style,
+        props.enterActive || {},
+        props.beforeEnter || {},
       );
-      const preSetBeforeEnter = productStyle(
-        child.props.style,
-        { display: 'block' },
-      )
       const rePaintDiv = rePainter(div);
-      const enterActiveSetter = compose(preSetEnterActive, setStyle, rePaintDiv);
-      const beforeEnterSetter = compose(preSetBeforeEnter, setStyle, rePaintDiv)
 
-      enterActiveSetter([props.enterActive])
-      beforeEnterSetter([props.enterActive, props.beforeEnter])
-      enterActiveSetter([props.enterActive, { display: 'block' }])
+      const styleSetter = pipe(preEnterStyle, setStyle, rePaintDiv);
+
+      styleSetter();
+      styleSetter(props.afterEnter);
 
       if (childRef && childRef.current) {
         setTransitionStatus(false);
@@ -57,7 +53,7 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 
   function productStyle(...presetStyles: Array<CSSProperties>) {
     return function composeStyle(styles: Array<CSSProperties>) {
-      return Object.assign({}, ...presetStyles, ...styles)
+      return Object.assign({}, ...presetStyles, styles)
     }
   }
 
@@ -68,12 +64,6 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
   }
 
   function handleTransitionEnd(e: MouseEvent) {
-    console.log(1);
-    let composedStyle = Object.assign({},
-      child.props.style,
-      props.afterEnter
-    );
-    setStyle(composedStyle);
     setTransitionStatus(true);
     setHasTransition(true);
   }
