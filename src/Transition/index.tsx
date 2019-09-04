@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from 'react'
 import { CSSProperties, FunctionComponent } from "react";
+import { compose } from '../utils/fp';
 import './index.scss';
 
 interface TransitionProps {
@@ -23,33 +24,48 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
       const div = divEl.current as HTMLDivElement;
       saveStyle(child.props.style);
 
-      let activeStyle = Object.assign({
-          display: 'none'
-        },
+      const preSetEnterActive = productStyle(
+        { display: 'none' },
         child.props.style,
-        props.enterActive
       );
-      setStyle(activeStyle);
-      div.getBoundingClientRect();
-      let composedStyle = Object.assign(
-        activeStyle,
+      const preSetBeforeEnter = productStyle(
+        child.props.style,
         { display: 'block' },
-        props.beforeEnter
-      );
-      console.log(composedStyle)
-      setStyle(composedStyle);
+      )
+      const rePaintDiv = rePainter(div);
+      const enterActiveSetter = compose(preSetEnterActive, setStyle, rePaintDiv);
+      const beforeEnterSetter = compose(preSetBeforeEnter, setStyle, rePaintDiv)
 
-      div.getBoundingClientRect();
-      setStyle({...activeStyle, display: 'block'});
+      enterActiveSetter([props.enterActive])
+      beforeEnterSetter([props.enterActive, props.beforeEnter])
+      enterActiveSetter([props.enterActive, { display: 'block' }])
+
       if (childRef && childRef.current) {
         setTransitionStatus(false);
         childRef.current.addEventListener('transitionend', handleTransitionEnd);
       }
-
     }
 
-
   }, []);
+
+  useEffect(() => {
+    if (isTransitionEnd && hasTransitionEnd) {
+      document.removeEventListener('transitionend', handleTransitionEnd)
+      setStyle(prevStyle);
+    }
+  }, [isTransitionEnd, hasTransitionEnd])
+
+  function productStyle(...presetStyles: Array<CSSProperties>) {
+    return function composeStyle(styles: Array<CSSProperties>) {
+      return Object.assign({}, ...presetStyles, ...styles)
+    }
+  }
+
+  function rePainter(el: HTMLDivElement) {
+    return function inner() {
+      el.getBoundingClientRect();
+    }
+  }
 
   function handleTransitionEnd(e: MouseEvent) {
     console.log(1);
@@ -57,20 +73,10 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
       child.props.style,
       props.afterEnter
     );
-    console.log(composedStyle)
     setStyle(composedStyle);
     setTransitionStatus(true);
     setHasTransition(true);
-
   }
-
-  useEffect(()=>{
-    if (isTransitionEnd && hasTransitionEnd) {
-      document.removeEventListener('transitionend', handleTransitionEnd)
-      setStyle(prevStyle);
-    }
-
-  }, [isTransitionEnd, hasTransitionEnd])
 
   return (
     <div
