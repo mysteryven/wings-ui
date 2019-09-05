@@ -1,13 +1,16 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from 'react'
 import { CSSProperties, FunctionComponent } from "react";
-import {compose, pipe} from '../utils/fp';
+import { compose, pipe } from '../utils/fp';
 import './index.scss';
 
 interface TransitionProps {
   beforeEnter?: CSSProperties;
   enterActive?: CSSProperties;
   afterEnter?: CSSProperties;
+  beforeLeave?: CSSProperties;
+  leaveActive?: CSSProperties;
+  afterLeave?: CSSProperties;
 }
 
 const Transition: FunctionComponent<TransitionProps> = (props) => {
@@ -30,7 +33,6 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
         props.beforeEnter || {},
       );
       const rePaintDiv = rePainter(div);
-
       const styleSetter = pipe(preEnterStyle, setStyle, rePaintDiv);
 
       styleSetter();
@@ -41,7 +43,6 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
         childRef.current.addEventListener('transitionend', handleTransitionEnd);
       }
     }
-
   }, []);
 
   useEffect(() => {
@@ -50,6 +51,24 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
       setStyle(prevStyle);
     }
   }, [isTransitionEnd, hasTransitionEnd])
+
+  useEffect(() => {
+    return () => {
+      if (divEl && divEl.current) {
+        const div = divEl.current as HTMLDivElement;
+
+        const preLeaveStyle = productStyle(
+          props.leaveActive || {},
+          props.beforeLeave || {},
+        );
+        const rePaintDiv = rePainter(div);
+        const styleSetter = pipe(preLeaveStyle, setStyle, rePaintDiv);
+
+        styleSetter();
+        styleSetter(props.afterLeave);
+      }
+    }
+  })
 
   function productStyle(...presetStyles: Array<CSSProperties>) {
     return function composeStyle(styles: Array<CSSProperties>) {

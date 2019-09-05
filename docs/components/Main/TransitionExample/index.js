@@ -2,23 +2,26 @@ import Transition from "../../../../src/Transition";
 import React from "react";
 
 const TransitionExample = () => {
+  const [visible, setVisible] = useState(visible);
   return (
     <div>
-      <Transition
-        beforeEnter={{
-        marginLeft: '10px',
-      }}
-        afterEnter={{
-          color: 'red',
-        marginLeft: '100px'
-      }}
-        enterActive={{
-          transition: 'all 3s',
-        }}
+      <button onClick={setVisible(prev => !prev)}>click</button>
+      {
+        visible && <Transition
+          beforeLeave={{
+            marginLeft: '10px',
+          }}
+          afterLeave={{
+            color: 'red',
+            marginLeft: '100px'
+          }}
+          leaveActive={{
+            transition: 'all 3s',
+          }}
 
-      >
-        <div>2</div>
-      </Transition>
+        >
+        </Transition>
+      }
     </div>
   )
 };
