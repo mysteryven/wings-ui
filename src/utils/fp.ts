@@ -1,5 +1,4 @@
 function compose(...fns: any) {
-  console.log(fns);
   return function composed(result: any) {
     return fns.reduceRight(function reducer(result: any, fn: any) {
       return fn(result);
