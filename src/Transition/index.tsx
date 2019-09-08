@@ -34,11 +34,11 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 
   useEffect(() => {
     if (isTransitionEnd && hasTransitionEnd) {
-      document.removeEventListener('transitionend', handleTransitionEnd);
+      document.removeEventListener('transitionend', handleBeginEnd);
       setStyle(prevStyle);
     }
     if (!shouldRender && hasTransitionEnd) {
-      document.removeEventListener('transitionend', xxx);
+      document.removeEventListener('transitionend', handleLeaveEnd);
     }
   }, [isTransitionEnd, hasTransitionEnd, shouldRender]);
 
@@ -62,7 +62,7 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 
     if (childRef && childRef.current) {
       setTransitionStatus(false);
-      const handle = visible ? handleTransitionEnd : xxx;
+      const handle = visible ? handleBeginEnd : handleLeaveEnd;
       childRef.current.addEventListener('transitionend', handle);
     }
   }, [shouldRender, props.visible])
@@ -84,12 +84,12 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
     };
   }
 
-  function handleTransitionEnd(e: MouseEvent) {
+  function handleBeginEnd(e: MouseEvent) {
     setTransitionStatus(true);
     setHasTransition(true);
   }
 
-  function xxx(e: MouseEvent) {
+  function handleLeaveEnd(e: MouseEvent) {
     setTransitionStatus(true);
     setShouldRender(false);
   }
@@ -112,4 +112,3 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 };
 
 export default Transition;
-
