@@ -45,30 +45,30 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isTransitionEnd && hasTransitionEnd) {
-      document.removeEventListener('transitionend', handleTransitionEnd)
-      setStyle(prevStyle);
-    }
-  }, [isTransitionEnd, hasTransitionEnd])
+  // useEffect(() => {
+  //   if (isTransitionEnd && hasTransitionEnd) {
+  //     document.removeEventListener('transitionend', handleTransitionEnd)
+  //     setStyle(prevStyle);
+  //   }
+  // }, [isTransitionEnd, hasTransitionEnd])
 
-  useEffect(() => {
-    return () => {
-      if (divEl && divEl.current) {
-        const div = divEl.current as HTMLDivElement;
-
-        const preLeaveStyle = productStyle(
-          props.leaveActive || {},
-          props.beforeLeave || {},
-        );
-        const rePaintDiv = rePainter(div);
-        const styleSetter = pipe(preLeaveStyle, setStyle, rePaintDiv);
-
-        styleSetter();
-        styleSetter(props.afterLeave);
-      }
-    }
-  })
+  // useEffect(() => {
+  //   return () => {
+  //     if (divEl && divEl.current) {
+  //       const div = divEl.current as HTMLDivElement;
+  //
+  //       const preLeaveStyle = productStyle(
+  //         props.leaveActive || {},
+  //         props.beforeLeave || {},
+  //       );
+  //       const rePaintDiv = rePainter(div);
+  //       const styleSetter = pipe(preLeaveStyle, setStyle, rePaintDiv);
+  //
+  //       styleSetter();
+  //       styleSetter(props.afterLeave);
+  //     }
+  //   }
+  // });
 
   function productStyle(...presetStyles: Array<CSSProperties>) {
     return function composeStyle(styles: Array<CSSProperties>) {

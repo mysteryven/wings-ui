@@ -1,5 +1,5 @@
 import Transition from "../../../../src/Transition";
-import React from "react";
+import React, {useState} from "react";
 
 const TransitionExample = () => {
   const [visible, setVisible] = useState(visible);
