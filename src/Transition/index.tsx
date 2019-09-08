@@ -1,7 +1,7 @@
-import * as React from "react";
-import { useState, useEffect, useRef } from 'react'
-import { CSSProperties, FunctionComponent } from "react";
-import { compose, pipe } from '../utils/fp';
+import * as React from 'react';
+import {useState, useEffect, useRef} from 'react';
+import {CSSProperties, FunctionComponent} from 'react';
+import {compose, pipe} from '../utils/fp';
 import './index.scss';
 
 interface TransitionProps {
@@ -11,6 +11,7 @@ interface TransitionProps {
   beforeLeave?: CSSProperties;
   leaveActive?: CSSProperties;
   afterLeave?: CSSProperties;
+  visible: boolean;
 }
 
 const Transition: FunctionComponent<TransitionProps> = (props) => {
@@ -18,90 +19,96 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
   const [prevStyle, saveStyle] = useState<CSSProperties>({});
   const childRef = useRef<null | HTMLElement>(null);
   const [composedStyle, setStyle] = useState<CSSProperties>({});
-  const child = React.Children.only(props.children) as React.ReactElement;
   const [isTransitionEnd, setTransitionStatus] = useState<boolean>(true);
   const [hasTransitionEnd, setHasTransition] = useState<boolean>(false);
+  const [shouldRender, setShouldRender] = useState<boolean>(true);
+
+  const child = React.Children.only(props.children) as React.ReactElement;
 
   useEffect(() => {
-    if (divEl && divEl.current) {
-      const div = divEl.current as HTMLDivElement;
-      saveStyle(child.props.style);
-
-      const preEnterStyle = productStyle(
-        child.props.style,
-        props.enterActive || {},
-        props.beforeEnter || {},
-      );
-      const rePaintDiv = rePainter(div);
-      const styleSetter = pipe(preEnterStyle, setStyle, rePaintDiv);
-
-      styleSetter();
-      styleSetter(props.afterEnter);
-
-      if (childRef && childRef.current) {
-        setTransitionStatus(false);
-        childRef.current.addEventListener('transitionend', handleTransitionEnd);
-      }
+    if (props.visible) {
+      setShouldRender(true);
     }
-  }, []);
 
-  // useEffect(() => {
-  //   if (isTransitionEnd && hasTransitionEnd) {
-  //     document.removeEventListener('transitionend', handleTransitionEnd)
-  //     setStyle(prevStyle);
-  //   }
-  // }, [isTransitionEnd, hasTransitionEnd])
+  }, [props.visible]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (divEl && divEl.current) {
-  //       const div = divEl.current as HTMLDivElement;
-  //
-  //       const preLeaveStyle = productStyle(
-  //         props.leaveActive || {},
-  //         props.beforeLeave || {},
-  //       );
-  //       const rePaintDiv = rePainter(div);
-  //       const styleSetter = pipe(preLeaveStyle, setStyle, rePaintDiv);
-  //
-  //       styleSetter();
-  //       styleSetter(props.afterLeave);
-  //     }
-  //   }
-  // });
-
-  function productStyle(...presetStyles: Array<CSSProperties>) {
-    return function composeStyle(styles: Array<CSSProperties>) {
-      return Object.assign({}, ...presetStyles, styles)
+  useEffect(() => {
+    if (isTransitionEnd && hasTransitionEnd) {
+      document.removeEventListener('transitionend', handleBeginEnd);
+      setStyle(prevStyle);
     }
+    if (!shouldRender && hasTransitionEnd) {
+      document.removeEventListener('transitionend', handleLeaveEnd);
+    }
+  }, [isTransitionEnd, hasTransitionEnd, shouldRender]);
+
+  useEffect(() => {
+    if (!shouldRender) {
+      return;
+    }
+    saveStyle(child.props.style);
+    const { visible, enterActive, leaveActive, beforeEnter, beforeLeave } = props;
+    const presetStyle = productStyle(
+      child.props.style,
+      visible ? enterActive : leaveActive,
+      visible ? beforeEnter : beforeLeave,
+    );
+    const rePaintDiv = rePainter(divEl.current as HTMLDivElement);
+
+    const styleSetter = pipe(presetStyle, setStyle, rePaintDiv);
+
+    styleSetter();
+    styleSetter(visible ? props.afterEnter : props.afterLeave);
+
+    if (childRef && childRef.current) {
+      setTransitionStatus(false);
+      const handle = visible ? handleBeginEnd : handleLeaveEnd;
+      childRef.current.addEventListener('transitionend', handle);
+    }
+  }, [shouldRender, props.visible])
+
+  function productStyle(
+    base: CSSProperties = {},
+    active: CSSProperties = {},
+    before: CSSProperties = {}
+  ) {
+    const presetStyles = [base, active, before];
+    return function composeStyle(styles: CSSProperties[]) {
+      return Object.assign({}, ...presetStyles, styles);
+    };
   }
 
   function rePainter(el: HTMLDivElement) {
     return function inner() {
       el.getBoundingClientRect();
-    }
+    };
   }
 
-  function handleTransitionEnd(e: MouseEvent) {
+  function handleBeginEnd(e: MouseEvent) {
     setTransitionStatus(true);
     setHasTransition(true);
   }
 
-  return (
-    <div
-      className={"w-transition"}
-      ref={divEl}
-    >
-      {
-        React.cloneElement(
-          child, {
-            ref: childRef,
-            style: composedStyle
-          }
-        )
-      }
-    </div>
-  )
+  function handleLeaveEnd(e: MouseEvent) {
+    setTransitionStatus(true);
+    setShouldRender(false);
+  }
+
+  return shouldRender ? (
+      <div
+        className={'w-transition'}
+        ref={divEl}
+      >
+        {
+          React.cloneElement(
+            child, {
+              ref: childRef,
+              style: composedStyle
+            }
+          )
+        }
+      </div>)
+    : null;
 };
 
 export default Transition;
