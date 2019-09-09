@@ -11,6 +11,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.test.json',
+      isolatedModules: true,
     },
   },
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
@@ -25,7 +26,7 @@ module.exports = {
     "^.+unit\\.(js|jsx)$": "babel-jest",
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  setupFilesAfterEnv: ["<rootDir>test/setupTests.js"]
+  setupFilesAfterEnv: ["<rootDir>/test/setupTests.js"],
 }
 
 

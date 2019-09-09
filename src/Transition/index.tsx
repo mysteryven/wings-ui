@@ -29,10 +29,8 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
     if (props.visible) {
       setShouldRender(true);
     } else {
-      console.log('here')
       setShouldRender(false);
     }
-
   }, [props.visible]);
 
   useEffect(() => {
@@ -97,7 +95,6 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
     setShouldRender(false);
   }
 
-  console.log(shouldRender)
   return shouldRender ? (
       <div
         className={'w-transition'}

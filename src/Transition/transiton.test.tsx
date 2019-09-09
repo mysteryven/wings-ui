@@ -1,19 +1,24 @@
+import {render} from '@testing-library/react';
 import * as React from 'react';
-import { shallow } from 'enzyme';
-import { findByTestAttr } from '../utils/testUtils';
+import '@testing-library/jest-dom/extend-expect';
 import Transition from './index';
 
-const setup = (props = {visible: true}) => {
-  return shallow(<Transition {...props}><div>Hello</div></Transition>);
+const setup = (props = { visible: true }) => {
+  return (
+    <Transition {...props}>
+      <div>Hello, world!</div>
+    </Transition>
+  );
 };
 
-/**
- * enzyme can't test useEffect
- */
 describe('Transition', () => {
   it('renders without error', () => {
-    const wrapper = setup();
-    const component = findByTestAttr(wrapper, 'w-transition');
-    expect(component.length).toBe(1);
+    const { container, getByText } = render(setup());
+    expect(getByText('Hello, world!')).toBeInTheDocument();
+  });
+  it('can accept `visible` props', () => {
+    const { container, debug, queryByText } = render(setup({visible: false}));
+    const usernameInput = queryByText('hello, world');
+    expect(usernameInput).toBeNull();
   });
 });
