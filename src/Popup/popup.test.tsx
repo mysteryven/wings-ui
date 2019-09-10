@@ -1,16 +1,19 @@
+import {render} from '@testing-library/react';
 import * as React from 'react';
-import { shallow } from 'enzyme';
-import { findByTestAttr } from '../utils/testUtils';
+import '@testing-library/jest-dom/extend-expect';
 import Popup from './index';
 
-const setup = (props = {}) => {
-  return shallow(<Popup {...props} />);
+const setup = () => {
+  return (
+    <Popup>
+      <div>Hello, world!</div>
+    </Popup>
+  );
 };
 
-describe('Button', () => {
+describe('Transition', () => {
   it('renders without error', () => {
-    const wrapper = setup();
-    const component = findByTestAttr(wrapper, 'w-popup');
-    expect(component.length).toBe(0);
+    const { container, getByText } = render(setup());
+    expect(getByText('Hello, world!')).toBeInTheDocument();
   });
 });

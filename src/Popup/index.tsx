@@ -1,7 +1,13 @@
 import * as React from 'react';
 
-const Popup = () => {
-  return <div>Popup</div>;
+interface PopupProps {
+ visible?: boolean;
+}
+
+const Popup: React.FunctionComponent<PopupProps> = (props) => {
+  return (
+    <div>{props.children}</div>
+  );
 };
 
 export default Popup;
