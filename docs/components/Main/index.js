@@ -10,7 +10,7 @@ const Main = (props) => {
     <div className={"w-main"}>
       <RouteWithMd path="/" md={introduction} exact />
       <RouteWithMd path="/button" md={button} />
-      {/*<RouteWithMd path="/transition" md={transition} />*/}
+      <RouteWithMd path="/transition" md={transition} />
     </div>
   )
 };

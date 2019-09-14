@@ -1,4 +1,5 @@
 import Transition from "../../../../src/Transition";
+import Button from "../../../../src/Button";
 import React, {useState} from "react";
 
 const TransitionExample = () => {
@@ -11,6 +12,7 @@ const TransitionExample = () => {
         visible={isVisible}
         beforeEnter={{
           marginLeft: '10px',
+          color: 'red'
         }}
         afterEnter={{
           color: 'red',
@@ -19,20 +21,8 @@ const TransitionExample = () => {
         enterActive={{
           transition: 'all 1s',
         }}
-
-        beforeLeave={{
-          marginLeft: '10px',
-        }}
-        afterLeave={{
-          color: 'red',
-          marginLeft: '100px'
-        }}
-        leaveActive={{
-          transition: 'all 1s',
-        }}
-
       >
-        <div>Hello</div>
+        <Button>Hello</Button>
       </Transition>
     </div>
   )
