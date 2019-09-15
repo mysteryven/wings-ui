@@ -14,7 +14,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: FunctionComponent<ButtonProps> = (props, ref) => {
-  console.log(ref);
   const { className, theme, onClick, disabled, loading, full, ...restProps } = props;
   const btnClasses = sc(
     'w-button',
