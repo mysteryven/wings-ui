@@ -45,7 +45,8 @@ const Aside = () => {
   const lists = [
     { path: '', name: 'Introduction 介绍' },
     { path: 'button', name: 'Button 按钮' },
-    { path: 'transition', name: 'transition 过渡' }
+    { path: 'transition', name: 'transition 过渡' },
+    { path: 'popup', name: 'popup 弹出层' }
   ];
 
   return (

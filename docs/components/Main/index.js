@@ -4,6 +4,7 @@ import Pane from '../Pane';
 import button from './ButtonExample/button.md'
 import introduction from './Introduction/intro.md'
 import transition from './TransitionExample/transition.md'
+import popup from './PopupExample/popup.md'
 
 const Main = (props) => {
   return (
@@ -11,6 +12,7 @@ const Main = (props) => {
       <RouteWithMd path="/" md={introduction} exact />
       <RouteWithMd path="/button" md={button} />
       <RouteWithMd path="/transition" md={transition} />
+      <RouteWithMd path="/popup" md={popup} />
     </div>
   )
 };
@@ -18,10 +20,10 @@ const Main = (props) => {
 export default Main;
 
 function RouteWithMd(props) {
-  const {path, md, ...restProps} = props;
+  const { path, md, ...restProps } = props;
   const component = () => (
     <div>
-      { props.md.split('<p>{||}</p>').map(i => <Pane key={i} content={i} />)}
+      {props.md.split('<p>{||}</p>').map(i => <Pane key={i} content={i} />)}
     </div>
   )
 
