@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {forwardRef, FunctionComponent, MouseEvent, useImperativeHandle, useRef} from 'react';
+import { forwardRef, FunctionComponent, MouseEvent, useImperativeHandle, useRef } from 'react';
 import Icon from '../Icon';
 import sc from '../utils/classname';
 import './index.scss';
@@ -18,7 +18,7 @@ const Button: FunctionComponent<ButtonProps> = (props, ref) => {
   const btnClasses = sc(
     'w-button',
     className,
-    theme,
+    theme ? theme : 'default',
     disabled ? 'w-disabled' : '',
     full ? 'w-full' : '',
     loading ? 'w-loading' : ''
@@ -33,7 +33,7 @@ const Button: FunctionComponent<ButtonProps> = (props, ref) => {
   const iconWrapper = loading ?
     (
       <div className="w-loading-icon-wrapper">
-        <Icon name="loading" className="w-loading-icon"/>
+        <Icon name="loading" className="w-loading-icon" />
       </div>
     )
     :
