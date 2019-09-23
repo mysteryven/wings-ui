@@ -1,6 +1,6 @@
 import Transition from "../../../../src/Transition";
 import Button from "../../../../src/Button";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const TransitionExample = () => {
 
@@ -15,7 +15,7 @@ const TransitionExample = () => {
         <Button theme="primary" disabled={isVisible === true} onClick={() => setVisible(true)}>开始动画</Button>
         <Button theme="warning" disabled={isVisible === false} onClick={() => setVisible(false)}>结束动画</Button>
       </div>
-      <hr/>
+      <hr />
       <div style={{
         display: 'flex',
         justifyContent: 'center',

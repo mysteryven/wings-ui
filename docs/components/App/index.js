@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import hljs from 'highlight.js';
-import {HashRouter} from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import '../index.scss';
 import Aside from "../Aside";
 import Main from "../Main";
@@ -20,9 +20,9 @@ const App = () => {
       </div>
       <div className={"w-container"}>
         <HashRouter>
-          <Aside/>
-          <Main/>
-          <MobileView/>
+          <Aside />
+          <Main />
+          <MobileView />
         </HashRouter>
       </div>
     </div>

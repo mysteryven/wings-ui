@@ -8,7 +8,14 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html'
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: 'mobile.html',
+            files: {
+                js: ['mobile.js']
+            }
+        }),
+
     ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -35,6 +42,15 @@ module.exports = {
                     }
                 },
             },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: "html-loader"
+                    }
+                ]
+            },
+
             {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader'

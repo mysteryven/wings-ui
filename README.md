@@ -5,8 +5,6 @@
 
 [![CircleCI](https://img.shields.io/circleci/build/github/mysteryven/wings-ui)](https://circleci.com/gh/mysteryven/wings-ui)
 
-[![Coverage Status](https://coveralls.io/repos/github/mysteryven/wings-ui/badge.svg?branch=master)](https://coveralls.io/github/mysteryven/wings-ui?branch=master)
-
 ## 含义
 
 本人很喜欢押尾光太郎的《Wings, you are hero》，于是取了第一个单词作名字。 

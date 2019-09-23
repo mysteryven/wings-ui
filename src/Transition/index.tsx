@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {useState, useEffect, useRef, EventHandler} from 'react';
-import {CSSProperties, FunctionComponent} from 'react';
-import {pipe} from '../utils/fp';
+import { useState, useEffect, useRef, EventHandler } from 'react';
+import { CSSProperties, FunctionComponent } from 'react';
+import { pipe } from '../utils/fp';
 import './index.scss';
 
 interface TransitionProps {
@@ -27,6 +27,7 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
   const child = React.Children.only(props.children) as React.ReactElement;
 
   useEffect(() => {
+    console.log(isTransitionEnd, hasTransitionEnd, shouldRender);
     if (isTransitionEnd && hasTransitionEnd) {
       document.removeEventListener('transitionend', handleBeginEnd);
       setStyle(prevStyle);
@@ -65,14 +66,19 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
     rePaintDiv();
     styleSetter(visible ? props.afterEnter : props.afterLeave);
 
+    console.log('hi');
+
     if (childRef && childRef.current) {
+      console.log(childRef);
       setTransitionStatus(false);
       const handle = visible ? handleBeginEnd : transitionEndWrapper;
+      console.log('hihi');
 
       childRef.current.addEventListener('transitionend', handle);
     }
 
     function transitionEndWrapper(e: any) {
+      console.log('end...')
       setHasRendered(false);
       setShouldRender(false);
       handleLeaveEnd(e);
@@ -115,12 +121,24 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
       {
         React.cloneElement(
           child, {
-            ref: childRef,
-            style: composedStyle
-          }
+          ref: childRef,
+          style: composedStyle
+        }
         )
       }
     </div>) : null;
 };
 
 export default Transition;
+Transition.defaultProps = {
+  beforeEnter: {},
+  enterActive: {
+    transition: 'all 0.7s',
+  },
+  afterEnter: {},
+  beforeLeave: {},
+  leaveActive: {
+    transition: 'all 0.7s',
+  },
+  afterLeave: {},
+}
