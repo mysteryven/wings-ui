@@ -3,7 +3,7 @@ import * as React from 'react';
 const MobileView = () => {
   return (
     <div className={"w-mobile-view"}>
-      <iframe src='mobile.html'></iframe>
+      <iframe src='mobile.html/#/button'></iframe>
     </div>
   )
 };

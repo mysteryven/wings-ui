@@ -3,17 +3,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
-        'wing-doc': './index.js'
+        'index': './index.js',
+        'mobile': './mobile.js'
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html'
+            template: 'index.html',
+            chunks: ['index'],
+            inject: 'body',
+            filename: 'index.html'
         }),
         new HtmlWebpackPlugin({
             template: 'mobile.html',
-            files: {
-                js: ['mobile.js']
-            }
+            mobile: true,
+            inject: 'body',
+            chunks: ['mobile'],
+            filename: 'mobile.html'
         }),
 
     ],
