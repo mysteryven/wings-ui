@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import hljs from 'highlight.js';
 import './index.scss';
@@ -21,14 +21,19 @@ const WLink = (props) => {
 };
 
 
-const Aside = () => {
+const Aside = (props) => {
   const [pageName, setPageName] = useState(getHashName());
+
+  useEffect(() => {
+    props.onChangeRouter(getHashName());
+  }, [])
 
   const wLinkConfig = {
     pageName,
     onClick: () => {
       // 只是为了让本地的 pageName 和路由的 hash 同步
       setPageName(getHashName());
+      props.onChangeRouter(getHashName());
       setTimeout(() => {
         document.querySelectorAll("pre code").forEach(block => {
           hljs.highlightBlock(block);
