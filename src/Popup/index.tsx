@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.scss';
 import Transition from '../Transition';
 import sc from '../utils/classname';
@@ -10,25 +10,84 @@ interface PopupProps extends HTMLDivElement {
 
 const Popup: React.FunctionComponent<PopupProps> = (props) => {
   const { visible, position, className, ...restProps } = props;
-  console.log(visible);
   const popupClasses = sc(
     'w-popup',
     className,
     position ? `w-popup-pos-${props.position}` : 'w-popup-pos-bottom'
   )
 
+  const [shouldRender, setShouldRender] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!visible) {
+      setTimeout(() => {
+        setShouldRender(false);
+      })
+    } else {
+      setShouldRender(true)
+    }
+  }, [props.visible])
+
   return (
-    <Transition
-      visible={true}
-    >
-      <div className={popupClasses} style={{ border: '1px solid red' }}>
+    shouldRender && (
+      <div className={popupClasses}>
+        <Transition
+          visible={visible}
+          className="w-popup-mask-wrapper"
+          beforeEnter={{
+            opacity: 0,
+            backgroundColor: 'transparent'
+          }}
+          afterEnter={{
+            opacity: 1,
+            backgroundColor: 'rgba(0,0,0, 0.4)'
+          }}
+          enterActive={{
+            transition: 'all 0.3s'
+          }}
+          beforeLeave={{
+            opacity: 1,
+            backgroundColor: 'rgba(0,0,0, 0.4)'
+          }}
+          afterLeave={{
+            opacity: 0,
+            backgroundColor: 'transparent'
+          }}
+          leaveActive={{
+            transition: 'all 0.3s'
+          }}
+        >
+          <div className="w-popup-mask" />
+        </Transition>
         <div className="w-popup-content">
-          {props.children}
+          <Transition
+            visible={visible}
+            beforeEnter={{
+              transform: 'translateY(100%)'
+            }}
+            afterEnter={{
+              transform: 'translateY(0%)',
+            }}
+            enterActive={{
+              transition: 'all 0.3s'
+            }}
+            beforeLeave={{
+              transform: 'translateY(0px)'
+            }}
+            afterLeave={{
+              transform: 'translateY(100%)'
+            }}
+            leaveActive={{
+              transition: 'all 0.3s'
+            }}
+          >
+            <div className="w-popup-content-inner">
+              {props.children}
+            </div>
+          </Transition>
         </div>
       </div>
-    </Transition>
-
-  );
+    ));
 };
 
 export default Popup;

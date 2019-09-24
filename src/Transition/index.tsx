@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect, useRef, EventHandler } from 'react';
 import { CSSProperties, FunctionComponent } from 'react';
+import sc from '../utils/classname';
 import { pipe } from '../utils/fp';
 import './index.scss';
 
@@ -12,6 +13,7 @@ interface TransitionProps {
   leaveActive?: CSSProperties;
   afterLeave?: CSSProperties;
   visible: boolean;
+  className?: string;
 }
 
 const Transition: FunctionComponent<TransitionProps> = (props) => {
@@ -27,7 +29,6 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
   const child = React.Children.only(props.children) as React.ReactElement;
 
   useEffect(() => {
-    console.log(isTransitionEnd, hasTransitionEnd, shouldRender);
     if (isTransitionEnd && hasTransitionEnd) {
       document.removeEventListener('transitionend', handleBeginEnd);
       setStyle(prevStyle);
@@ -51,34 +52,39 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 
     saveStyle(child.props.style);
     setTransitionStatus(false);
+    let prev = {}
+    if (typeof child.props.style === 'object') {
+      prev = JSON.parse(JSON.stringify(child.props.style));
+    }
     const { visible, enterActive, leaveActive, beforeEnter, beforeLeave } = props;
     const presetStyle = productStyle(
-      child.props.style,
-      visible ? enterActive : leaveActive,
-      visible ? beforeEnter : beforeLeave,
+      prev,
+      visible ? beforeEnter : beforeLeave
     );
 
     const rePaintDiv = rePainter(divEl.current as HTMLDivElement);
 
-    const styleSetter = pipe(presetStyle, setStyle, rePaintDiv);
-
-    styleSetter();
+    const beforeStyleSetter = pipe(presetStyle, setStyle);
+    beforeStyleSetter()
     rePaintDiv();
-    styleSetter(visible ? props.afterEnter : props.afterLeave);
 
-    console.log('hi');
+    setTimeout(() => {
+      beforeStyleSetter(visible ?
+        { ...props.enterActive, ...props.afterEnter } :
+        { ...props.leaveActive, ...props.afterLeave }
+      );
 
-    if (childRef && childRef.current) {
-      console.log(childRef);
-      setTransitionStatus(false);
-      const handle = visible ? handleBeginEnd : transitionEndWrapper;
-      console.log('hihi');
+      if (childRef && childRef.current) {
+        setTransitionStatus(false);
+        const handle = visible ? handleBeginEnd : transitionEndWrapper;
 
-      childRef.current.addEventListener('transitionend', handle);
-    }
+        childRef.current.addEventListener('transitionend', handle);
+      }
+    }, 0)
+
+
 
     function transitionEndWrapper(e: any) {
-      console.log('end...')
       setHasRendered(false);
       setShouldRender(false);
       handleLeaveEnd(e);
@@ -92,7 +98,7 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
   ) {
     const presetStyles = [base, active, before];
 
-    return function composeStyle(styles: CSSProperties) {
+    return function composeStyle(styles: CSSProperties = {}) {
       return Object.assign({}, ...presetStyles, styles);
     };
   }
@@ -115,7 +121,7 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 
   return shouldRender ? (
     <div
-      className={'w-transition'}
+      className={sc('w-transition', props.className)}
       ref={divEl}
     >
       {
@@ -130,15 +136,3 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
 };
 
 export default Transition;
-Transition.defaultProps = {
-  beforeEnter: {},
-  enterActive: {
-    transition: 'all 0.7s',
-  },
-  afterEnter: {},
-  beforeLeave: {},
-  leaveActive: {
-    transition: 'all 0.7s',
-  },
-  afterLeave: {},
-}
