@@ -4,7 +4,8 @@ import { HashRouter, Route } from "react-router-dom";
 import Intro from './components/Main/Introduction';
 import ButtonExample from './components/Main/ButtonExample';
 import TransitionExample from './components/Main/TransitionExample';
-import popupExample from './components/Main/PopupExample';
+import PopupExample from './components/Main/PopupExample';
+import GridExample from './components/Main/GridExample';
 
 const Mobile = () => {
   return (
@@ -12,7 +13,8 @@ const Mobile = () => {
       <Route path="/" component={Intro} exact />
       <Route path="/button" component={ButtonExample} />
       <Route path="/transition" component={TransitionExample} />
-      <Route path="/popup" component={popupExample} />
+      <Route path="/popup" component={PopupExample} />
+      <Route path="/grid" component={GridExample} />
     </HashRouter>
   )
 };

@@ -5,6 +5,7 @@ import button from './ButtonExample/button.md'
 import introduction from './Introduction/intro.md'
 import transition from './TransitionExample/transition.md'
 import popup from './PopupExample/popup.md'
+import grid from './GridExample/grid.md'
 
 const Main = (props) => {
   return (
@@ -13,6 +14,7 @@ const Main = (props) => {
       <RouteWithMd path="/button" md={button} />
       <RouteWithMd path="/transition" md={transition} />
       <RouteWithMd path="/popup" md={popup} />
+      <RouteWithMd path="/grid" md={grid} />
     </div>
   )
 };
