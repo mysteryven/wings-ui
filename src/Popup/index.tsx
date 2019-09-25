@@ -1,4 +1,5 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
+import ReactDOM from 'react-dom';
 import './index.scss';
 import Transition from '../Transition';
 import sc from '../utils/classname';
@@ -39,7 +40,8 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
     }
   }, [props.visible])
 
-  return (
+
+  const popupElement = (
     shouldRender ? (
       <div className={popupClasses}>
         <Transition
@@ -63,7 +65,10 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
           </Transition>
         </div>
       </div>
-    ) : null);
+    ) : null
+  )
+
+  return ReactDOM.createPortal(popupElement, document.body)
 };
 
 export default Popup;
