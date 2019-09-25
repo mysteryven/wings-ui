@@ -17,22 +17,30 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
   )
 
   const [shouldRender, setShouldRender] = useState<boolean>(true);
+  const [xxx, setX] = useState<boolean>(true);
 
   useEffect(() => {
     if (!visible) {
       setTimeout(() => {
+        setX(false);
         setShouldRender(false);
-      })
+      }, 100);
     } else {
-      setShouldRender(true)
+      setShouldRender(true);
     }
   }, [props.visible])
 
+  useEffect(() => {
+    if (shouldRender) {
+      setX(true);
+    }
+  }, [shouldRender])
+
   return (
-    shouldRender && (
+    shouldRender ? (
       <div className={popupClasses}>
         <Transition
-          visible={visible}
+          visible={visible? xxx : visible}
           className="w-popup-mask-wrapper"
           beforeEnter={{
             opacity: 0,
@@ -61,7 +69,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
         </Transition>
         <div className="w-popup-content">
           <Transition
-            visible={visible}
+            visible={visible ? xxx : visible}
             beforeEnter={{
               transform: 'translateY(100%)'
             }}
@@ -87,7 +95,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
           </Transition>
         </div>
       </div>
-    ));
+    ) : null);
 };
 
 export default Popup;

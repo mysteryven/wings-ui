@@ -82,8 +82,6 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
       }
     }, 0)
 
-
-
     function transitionEndWrapper(e: any) {
       setHasRendered(false);
       setShouldRender(false);
