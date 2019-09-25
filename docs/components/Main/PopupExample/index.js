@@ -1,14 +1,29 @@
-import Transition from "../../../../src/Transition";
 import Popup from "../../../../src/Popup";
+import Button from "../../../../src/Button";
 import React, { useState } from "react";
 
 const PopupExample = () => {
-  const [isVisible, setVisible] = useState(true);
+  const [isBottomVisible, setBottomVisible] = useState(false);
+  const [isLeftVisible, setLeftVisible] = useState(false);
   return (
     <div>
-      <button onClick={() => { console.log('hi'); setVisible(true) }}>{isVisible ? 'true' : 'false'}</button>
-      <Popup visible={isVisible}>
-        <p onClick={() => { setVisible(false) }}>close</p>
+      <div>
+        <Button full style={{ marginBottom: '12px' }} theme="primary" onClick={() => { setLeftVisible(true) }}>Popup from left</Button>
+        <Button full theme="primary" onClick={() => { setBottomVisible(true) }}>Popup from bottom</Button>
+      </div>
+
+      <Popup visible={isLeftVisible} position="left">
+        <Button onClick={() => { setLeftVisible(false) }}>close</Button>
+        <div style={{ paddingRight: '12px' }}>
+          <p>Html</p>
+          <p>JavaScript</p>
+          <p>CSS</p>
+          <p>Java</p>
+          <p>Go</p>
+        </div>
+      </Popup>
+      <Popup visible={isBottomVisible}>
+        <Button onClick={() => { setBottomVisible(false) }}>close</Button>
         <p>Hello world</p>
         <p>Hello world</p>
         <p>Hello world</p>

@@ -1,6 +1,5 @@
 ### 使用说明
-
-该组件的 API 设计参考 Vue 的 Transition 组件，使用中，过渡所需的时间要加在 `enterActive` 或 `leaveAcitve` 中。具体如下面例子所示。
+本组件库需要的 Popup 用到了该组件
 
 {||}
 
@@ -22,20 +21,24 @@ visible && (
 
 {||}
 
+### interval
+
+动画的持续时间，单位为毫米，默认是 300ms
+
+{||}
 
 ### Enter 
 
-enter 过程中有三个 API:
-1. `enterActive` 存在于整个进入动画中。
-2. `beforeEnter` 在进入动画的第一帧。
-3. `afterEnter` 在进入动画的最后一帧。
+enter 过程中有两个 API:
+1. `beforeEnter` 在进入动画的第一帧。
+2. `afterEnter` 在进入动画的最后一帧。
 
 ```html
  <Transition
-   visible={isVisible}
-   beforeEnter={{ fontSize: '16px', opacity: 0 }}
-   afterEnter={{ fontSize: '24px', opacity: '1' }}
-   enterActive={{ transition: 'all 1s' }}
+  interval={500}
+  visible={isVisible}
+  beforeEnter={{ fontSize: '16px', opacity: 0 }}
+  afterEnter={{ fontSize: '24px', opacity: '1' }}
  >
    <div>Hello World</div>
  </Transition>
@@ -46,17 +49,16 @@ enter 过程中有三个 API:
 
 ### Leave 
 
-leave 过程中同样有三个 API:
-1. `enterLeave` 存在于整个离开动画中。
+leave 过程中同样有两个 API:
 2. `beforeLeave` 在进入离开动画的第一帧。
 3. `afterLeave` 在进入离开动画的最后一帧。
 
 ```html
 <Transition
-   visible={isVisible}
-   beforeLeave={{ marginLeft: '10px', }}
-   afterLeave={{ color: 'red', marginLeft: '100px' }}
-   leaveActive={{ transition: 'all 0.4s', }}
+  interval={500}
+  visible={isVisible}
+  beforeLeave={{ marginLeft: '10px', }}
+  afterLeave={{ color: 'red', marginLeft: '100px' }}
  >
    <div>Hello World</div>
  </Transition>
