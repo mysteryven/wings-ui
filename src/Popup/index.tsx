@@ -1,5 +1,6 @@
-import React, { useEffect, useState, CSSProperties } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { useEffect, useState, CSSProperties } from 'react';
+import * as ReactDOM from 'react-dom';
 import './index.scss';
 import Transition from '../Transition';
 import sc from '../utils/classname';
@@ -52,7 +53,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
         >
           <div className="w-popup-mask" />
         </Transition>
-        <div className="w-popup-content">
+        <div className="w-popup-content" data-testid={props.position}>
           <Transition
             className={`w-pop-content-wrapper-${props.position}`}
             interval={interval}
