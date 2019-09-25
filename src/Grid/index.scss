@@ -1,0 +1,23 @@
+.w-row {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: transparent;
+}
+
+.w-col {
+  box-sizing: border-box;
+  $class-prefix: w-col-;
+  background: transparent;
+  @for $n from 1 through 24 {
+    &.#{$class-prefix}#{$n} {
+      width: ($n / 24) * 100%;
+    }
+  }
+  $class-prefix: w-col-offset-;
+  @for $n from 1 through 24 {
+    &.#{$class-prefix}#{$n} {
+      margin-left: ($n / 24) * 100%;
+    }
+  }
+}
