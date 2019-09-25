@@ -93,5 +93,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
 export default Popup;
 
 Popup.defaultProps = {
-  visible: true
+  visible: true,
+  position: 'bottom'
+
 }
