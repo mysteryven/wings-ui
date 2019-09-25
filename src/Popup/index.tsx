@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, CSSProperties } from 'react';
 import './index.scss';
 import Transition from '../Transition';
 import sc from '../utils/classname';
+import content from '../../types/custom';
 
 interface PopupProps extends HTMLDivElement {
   visible: boolean;
-  position?: 'top' | 'right' | 'bottom' | 'left';
+  position: 'bottom' | 'left';
 }
 
 const Popup: React.FunctionComponent<PopupProps> = (props) => {
@@ -13,84 +14,48 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
   const popupClasses = sc(
     'w-popup',
     className,
-    position ? `w-popup-pos-${props.position}` : 'w-popup-pos-bottom'
+    `w-popup-pos-${props.position}`
   )
 
   const [shouldRender, setShouldRender] = useState<boolean>(true);
-  const [xxx, setX] = useState<boolean>(true);
+  const [interval, setInterval] = useState<number>(300);
+  const [isInnerVisible, setIsInnerVisible] = useState<boolean>(true);
+  const [first, setIsFirst] = useState<boolean>(true);
 
   useEffect(() => {
     if (!visible) {
-      setX(false);
-      setTimeout(() => {
+      setIsInnerVisible(false);
+      if (first) {
         setShouldRender(false);
-      }, 100);
-    } else if (visible && !xxx) {
+      } else {
+        setTimeout(() => {
+          setShouldRender(false);
+        }, interval);
+      }
+    } else if (visible && !isInnerVisible) {
       setShouldRender(true);
-      setX(true);
+      setIsInnerVisible(true);
+      setIsFirst(false)
     }
   }, [props.visible])
-
-  useEffect(() => {
-    if (shouldRender) {
-      setX(true);
-    }
-  }, [shouldRender])
 
   return (
     shouldRender ? (
       <div className={popupClasses}>
-        <div>{shouldRender ? 'rendertrue' : 'shoulfalse'}</div>
-        <div>{xxx ? 'xxxtrue' : 'xxxfalse'}</div>
         <Transition
-          visible={xxx}
+          interval={interval}
+          visible={isInnerVisible}
           className="w-popup-mask-wrapper"
-          beforeEnter={{
-            opacity: 0,
-            backgroundColor: 'transparent'
-          }}
-          afterEnter={{
-            opacity: 1,
-            backgroundColor: 'rgba(0,0,0, 0.4)'
-          }}
-          enterActive={{
-            transition: 'all 0.3s'
-          }}
-          beforeLeave={{
-            opacity: 1,
-            backgroundColor: 'rgba(0,0,0, 0.4)'
-          }}
-          afterLeave={{
-            opacity: 0,
-            backgroundColor: 'transparent'
-          }}
-          leaveActive={{
-            transition: 'all 0.3s'
-          }}
+          {...maskPosition}
         >
           <div className="w-popup-mask" />
         </Transition>
         <div className="w-popup-content">
           <Transition
-            visible={xxx}
-            beforeEnter={{
-              transform: 'translateY(100%)'
-            }}
-            afterEnter={{
-              transform: 'translateY(0%)',
-            }}
-            enterActive={{
-              transition: 'all 0.3s'
-            }}
-            beforeLeave={{
-              transform: 'translateY(0px)'
-            }}
-            afterLeave={{
-              transform: 'translateY(100%)'
-            }}
-            leaveActive={{
-              transition: 'all 0.3s'
-            }}
+            className={`w-pop-content-wrapper-${props.position}`}
+            interval={interval}
+            visible={isInnerVisible}
+            {...contentPosition[props.position]}
           >
             <div className="w-popup-content-inner">
               {props.children}
@@ -106,5 +71,68 @@ export default Popup;
 Popup.defaultProps = {
   visible: true,
   position: 'bottom'
+}
 
+
+const maskPosition = {
+  beforeEnter: {
+    opacity: 0,
+    backgroundColor: 'transparent'
+  },
+  afterEnter: {
+    opacity: 1,
+    backgroundColor: 'rgba(0,0,0, 0.4)'
+  },
+  beforeLeave: {
+    opacity: 1,
+    backgroundColor: 'rgba(0,0,0, 0.4)'
+  },
+  afterLeave: {
+    opacity: 0,
+    backgroundColor: 'transparent'
+  },
+}
+
+
+interface ContentPositionItem {
+  beforeEnter: CSSProperties;
+  afterEnter: CSSProperties;
+  beforeLeave: CSSProperties;
+  afterLeave: CSSProperties;
+}
+
+interface ContentPosition {
+  bottom: ContentPositionItem
+  left: ContentPositionItem
+}
+
+const contentPosition: ContentPosition = {
+  'bottom': {
+    beforeEnter: {
+      transform: 'translateY(100%)'
+    },
+    afterEnter: {
+      transform: 'translateY(0%)',
+    },
+    beforeLeave: {
+      transform: 'translateY(0%)'
+    },
+    afterLeave: {
+      transform: 'translateY(100%)'
+    }
+  },
+  'left': {
+    beforeEnter: {
+      transform: 'translateX(-100%)'
+    },
+    afterEnter: {
+      transform: 'translateX(0%)',
+    },
+    beforeLeave: {
+      transform: 'translateX(0%)'
+    },
+    afterLeave: {
+      transform: 'translateX(-100%)'
+    }
+  }
 }
