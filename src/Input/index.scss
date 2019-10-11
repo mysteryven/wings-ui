@@ -1,0 +1,11 @@
+@import '../common';
+.w-input {
+  font-size: 14px;
+  padding: 6px 4px;
+  border-radius: 4px;
+  outline: none;
+  border: $default-input-border;
+  &:focus {
+    border: $focus-input-border;
+  }
+}

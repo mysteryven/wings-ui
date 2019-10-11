@@ -1,0 +1,37 @@
+.w-form {
+  font-size: 14px;
+  padding: 8px 0;
+  &-label {
+    text-align: right;
+    display: flex;
+    align-items: center;
+  }
+  .w-col {
+    display: flex;
+    align-items: center;
+  }
+
+  .w-google-style-input-wrapper {
+    position: relative;
+    .w-google-style-input {
+      &:placeholder-shown::placeholder {
+        color: transparent;
+      }
+
+    }
+
+    .w-google-style-label {
+      position: absolute;
+      left: 12px; top: 6px;
+      pointer-events: none;
+      color: #ddd;
+      transition: all 250ms;
+    }
+
+    .w-google-style-input:not(:placeholder-shown) ~ .w-google-style-label,
+    .w-google-style-input:focus ~ .w-google-style-label {
+      transform: scale(0.85) translate(-4px, -20px);
+      background-color: white;
+    }
+  }
+}
