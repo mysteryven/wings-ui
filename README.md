@@ -2,8 +2,7 @@
 
 > 基于 React 设计的移动端 UI 框架。
 
-
-[![CircleCI](https://img.shields.io/circleci/build/github/mysteryven/wings-ui)](https://circleci.com/gh/mysteryven/wings-ui)
+[![CircleCI](https://circleci.com/gh/mysteryven/wings-ui.svg?style=svg)](https://circleci.com/gh/mysteryven/wings-ui)
 
 ## 含义
 
