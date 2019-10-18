@@ -52,7 +52,8 @@ const Aside = (props) => {
     { path: 'button', name: 'Button 按钮' },
     { path: 'transition', name: 'transition 过渡' },
     { path: 'popup', name: 'popup 弹出层' },
-    { path: 'grid', name: 'grid 栅格布局' }
+    { path: 'grid', name: 'grid 栅格布局' },
+    { path: 'form', name: 'form 表单' }
   ];
 
   return (
