@@ -1,6 +1,6 @@
 import * as React from "react";
 import validator from './validator';
-import {Row, Col} from '../grid';
+import {Row, Col} from '../Grid';
 import Input from '../input';
 import {ChangeEventHandler, CSSProperties, FormEvent, ReactElement} from "react";
 import './index.scss';
