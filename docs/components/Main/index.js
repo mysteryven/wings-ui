@@ -7,6 +7,7 @@ import transition from './TransitionExample/transition.md'
 import popup from './PopupExample/popup.md'
 import grid from './GridExample/grid.md'
 import form from './FormExample/form.md'
+import message from './MessageExample/message.md'
 
 const Main = (props) => {
   return (
@@ -17,6 +18,7 @@ const Main = (props) => {
       <RouteWithMd path="/popup" md={popup} />
       <RouteWithMd path="/grid" md={grid} />
       <RouteWithMd path="/form" md={form} />
+      <RouteWithMd path="/message" md={message} />
     </div>
   )
 };
