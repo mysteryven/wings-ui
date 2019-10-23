@@ -8,6 +8,7 @@ import popup from './PopupExample/popup.md'
 import grid from './GridExample/grid.md'
 import form from './FormExample/form.md'
 import message from './MessageExample/message.md'
+import popover from './PopoverExample/popover.md'
 
 const Main = (props) => {
   return (
@@ -19,6 +20,7 @@ const Main = (props) => {
       <RouteWithMd path="/grid" md={grid} />
       <RouteWithMd path="/form" md={form} />
       <RouteWithMd path="/message" md={message} />
+      <RouteWithMd path="/popover" md={popover} />
     </div>
   )
 };
