@@ -1,0 +1,9 @@
+.w-popover {
+  display: inline-flex;
+  position: relative;
+  .w-popover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
