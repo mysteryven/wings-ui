@@ -15,6 +15,8 @@ interface TransitionProps {
   className?: string;
 }
 
+let timer: any = null;
+
 const Transition: FunctionComponent<TransitionProps> = (props) => {
   const divEl = useRef<null | HTMLDivElement>(null);
   const childRef = useRef<null | HTMLElement>(null);
@@ -32,35 +34,49 @@ const Transition: FunctionComponent<TransitionProps> = (props) => {
   })
 
   useEffect(() => {
-    const { beforeEnter = {}, afterEnter = {} } = props;
+    const {
+      beforeEnter = {},
+      afterEnter = {},
+      beforeLeave = {},
+      afterLeave = {},
+      visible
+    } = props;
     let prev = {}
     if (typeof child.props.style === 'object') {
       prev = JSON.parse(JSON.stringify(child.props.style));
     }
 
-    if (props.visible) {
-      setShouldRender(true);
-      if (!hasRendered) {
-        return
-      }
-      const a = beStyleStr(beforeEnter || {})
-      if (divEl && divEl.current) {
-        divEl.current.style.cssText = a;
-        divEl && divEl.current && divEl.current.getBoundingClientRect();
+    visible && setShouldRender(true)
 
-        const interval = props.interval || 400
-        const b = beStyleStr(afterEnter || {}, {
-          transition: `all ${interval}ms`
-        })
-        divEl.current.style.cssText = b;
-        setTimeout(() => {
-          setStyle(prev);
-        }, props.interval)
-      }
-    } else {
-
+    if (visible && !hasRendered) {
+      return;
     }
-  }, [props.visible, hasRendered])
+
+    if (divEl && divEl.current) {
+      const preset = beStyleStr(
+        (visible ? beforeEnter : beforeLeave) || {}
+      )
+      divEl.current.style.cssText = preset;
+      divEl && divEl.current && divEl.current.getBoundingClientRect();
+
+      const interval = props.interval || 300
+      const after = beStyleStr(
+        (visible ? afterEnter : afterLeave) || {}, {
+        transition: `all ${interval}ms`
+      })
+      divEl.current.style.cssText = after;
+      setTimeout(() => {
+        setStyle(prev);
+        if (!visible) {
+          setStyle(prev);
+          setShouldRender(false);
+        }
+      }, props.interval)
+    }
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [props.visible, hasRendered, shouldRender])
 
   function beStyleStr(...arr: Array<CSSProperties>) {
     return arr.reduce((acc: string, cur: CSSProperties) => {
