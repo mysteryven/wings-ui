@@ -2,17 +2,18 @@
     box-sizing: border-box;
   display: inline-flex;
   position: relative;
-  .w-popover-content {
-    visibility: hidden;
+}
+.w-popover-content {
+  &-top {
     box-sizing: border-box;
     position: absolute;
-    bottom: calc(100% + 8px);
     color: white;
     background: #202021;
-    max-width: 300px;
+    margin-top: -8px;
+    max-width: 200px;
     min-width: 120px;
     box-sizing: border-box; 
-    padding: 4px;
+    padding: 8px 4px;
     border-radius: 4px;
     word-break: break-all;
     font-size: 12px;
@@ -29,4 +30,32 @@
       left: calc(50% - 4px);
     }
   }
+
+  &-bottom {
+    box-sizing: border-box;
+    position: absolute;
+    color: white;
+    background: #202021;
+    margin-top: 8px;
+    max-width: 200px;
+    min-width: 120px;
+    box-sizing: border-box; 
+    padding: 8px 4px;
+    border-radius: 4px;
+    word-break: break-all;
+    font-size: 12px;
+    z-index: 1;
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 1px;
+      background: inherit;
+      transform: rotate(45deg);
+      position: absolute;
+      top: -4px;
+      left: calc(50% - 4px);
+    }
+  }
+
 }
