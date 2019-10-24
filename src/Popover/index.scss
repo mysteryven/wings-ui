@@ -1,9 +1,31 @@
 .w-popover {
+    box-sizing: border-box;
   display: inline-flex;
   position: relative;
   .w-popover-content {
+    box-sizing: border-box;
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: calc(100% + 8px);
+    color: white;
+    background: #202021;
+    max-width: 300px;
+    min-width: 120px;
+    box-sizing: border-box; 
+    padding: 4px;
+    border-radius: 4px;
+    word-break: break-all;
+    font-size: 12px;
+    z-index: 1;
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 1px;
+      background: inherit;
+      transform: rotate(45deg);
+      position: absolute;
+      bottom: -4px;
+      left: calc(50% - 4px);
+    }
   }
 }
