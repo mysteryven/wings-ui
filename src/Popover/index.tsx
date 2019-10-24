@@ -4,7 +4,11 @@ import { EventType } from '@testing-library/dom';
 
 interface PopoverProps {
   content: React.ReactNode | string;
+  type?: 'shortPress' | 'longPress';
 }
+
+let timer: any = null;
+let current: number = 0;
 
 const Popover: React.FC<PopoverProps> = (props) => {
   const triggerEl = useRef<null | HTMLDivElement>(null);
@@ -24,19 +28,52 @@ const Popover: React.FC<PopoverProps> = (props) => {
 
     return () => {
       document.removeEventListener('click', onDocumentClick);
+      clearTimeout(timer);
+      current = 0;
     }
   })
 
   useEffect(() => {
-    setShouldRender(isVisible);
+    setTimeout(()=> {
+      setShouldRender(isVisible);
+    })
     !isVisible && document.removeEventListener('click', onDocumentClick);
   }, [isVisible])
 
+  function onTriggerClick() {
+    props.type !== "longPress" && setVisible(!isVisible)
+  }
+
+  function onTriggerTouchStart() {
+    if (props.type === "longPress") {
+      count(3);
+    }
+  }
+
+  function count(time: number) {
+    if (time < 0) {
+      setVisible(true)
+    } else {
+      timer = setTimeout(count.bind(undefined, time - 1), 100)
+    }
+  }
+
+  function onTriggerTouchEnd() {
+    if (props.type === 'longPress') {
+      clearTimeout(timer);
+      current = 0
+    }
+  }
+
   function onDocumentClick(e: any) {
-    if (isInner(contentEl)) {
+    if (
+      isInner(contentEl) ||
+      props.type === "longPress" && isInner(triggerEl)
+    ) {
       return;
     }
-    
+
+
     setVisible(false);
 
     function isInner(el: RefObject<HTMLDivElement>) {
@@ -60,7 +97,15 @@ const Popover: React.FC<PopoverProps> = (props) => {
           </div>
         )
       }
-      <div className="w-popover-trigger" ref={triggerEl} onClick={() => setVisible(!isVisible)}>
+      <div
+        className="w-popover-trigger"
+        ref={triggerEl}
+        onClick={onTriggerClick}
+        onMouseDown={onTriggerTouchStart}
+        onTouchStart={onTriggerTouchStart}
+        onTouchEnd={onTriggerTouchEnd}
+        onMouseUp={onTriggerTouchEnd}
+      >
         {props.children}
       </div>
     </div>
