@@ -1,68 +1,61 @@
 import React, { useRef, useState, useEffect, RefObject } from 'react';
 import './index.scss';
-import { EventType } from '@testing-library/dom';
 
 interface PopoverProps {
   content: React.ReactNode | string;
   type?: 'shortPress' | 'longPress';
+  interval?: number;
 }
 
 let timer: any = null;
-let current: number = 0;
 
 const Popover: React.FC<PopoverProps> = (props) => {
   const triggerEl = useRef<null | HTMLDivElement>(null);
   const contentEl = useRef<null | HTMLDivElement>(null);
   const [offsetX, setOffsetX] = useState<number>(0);
+  const [hasSetOffset, setOffsetStatus] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
   const [shouldRender, setShouldRender] = useState<boolean>(false);
 
   useEffect(() => {
-    if (triggerEl && triggerEl.current && contentEl && contentEl.current) {
-      const triggerWidth = getWidth(triggerEl);
-      const contentWidth = getWidth(contentEl);
+    if (isVisible) {
+      setShouldRender(true)
+    } else {
+      setShouldRender(false);
+      setOffsetStatus(false)
+      document.removeEventListener('click', onDocumentClick);
+    }
+  }, [isVisible])
 
-      setOffsetX((triggerWidth - contentWidth) / 2)
+  useEffect(() => {
+    if (triggerEl && triggerEl.current && contentEl && contentEl.current) {
+      setOffsetX(( getWidth(triggerEl) - getWidth(contentEl)) / 2)
+      setOffsetStatus(true);
       document.addEventListener('click', onDocumentClick)
     }
 
     return () => {
       document.removeEventListener('click', onDocumentClick);
       clearTimeout(timer);
-      current = 0;
     }
-  })
-
-  useEffect(() => {
-    setTimeout(()=> {
-      setShouldRender(isVisible);
-    })
-    !isVisible && document.removeEventListener('click', onDocumentClick);
-  }, [isVisible])
+  }, [shouldRender])
 
   function onTriggerClick() {
     props.type !== "longPress" && setVisible(!isVisible)
   }
 
   function onTriggerTouchStart() {
-    if (props.type === "longPress") {
-      count(3);
-    }
+    props.type === "longPress" && count(props.interval || 300);
   }
 
   function count(time: number) {
-    if (time < 0) {
-      setVisible(true)
-    } else {
-      timer = setTimeout(count.bind(undefined, time - 1), 100)
-    }
+    time < 0
+      ? setVisible(true)
+      : timer = setTimeout(count.bind(undefined, time - 100), 100);
   }
 
   function onTriggerTouchEnd() {
-    if (props.type === 'longPress') {
-      clearTimeout(timer);
-      current = 0
-    }
+    props.type === 'longPress' && clearTimeout(timer);
   }
 
   function onDocumentClick(e: any) {
@@ -72,7 +65,6 @@ const Popover: React.FC<PopoverProps> = (props) => {
     ) {
       return;
     }
-
 
     setVisible(false);
 
@@ -92,7 +84,10 @@ const Popover: React.FC<PopoverProps> = (props) => {
     <div className="w-popover">
       {
         shouldRender && (
-          <div className="w-popover-content" ref={contentEl} style={{ left: offsetX }}>
+          <div className="w-popover-content" ref={contentEl} style={{
+            left: offsetX,
+            visibility: hasSetOffset ? 'visible' : 'hidden'
+          }}>
             {props.content}
           </div>
         )
@@ -110,6 +105,11 @@ const Popover: React.FC<PopoverProps> = (props) => {
       </div>
     </div>
   )
+}
+
+Popover.defaultProps = {
+  interval: 300,
+  type: 'shortPress',
 }
 
 export default Popover;

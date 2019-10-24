@@ -3,6 +3,7 @@
   display: inline-flex;
   position: relative;
   .w-popover-content {
+    visibility: hidden;
     box-sizing: border-box;
     position: absolute;
     bottom: calc(100% + 8px);
