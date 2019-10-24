@@ -20,7 +20,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
   )
 
   const [shouldRender, setShouldRender] = useState<boolean>(true);
-  const [interval, setInterval] = useState<number>(300);
+  const [interval, setInterval] = useState<number>(600);
   const [isInnerVisible, setIsInnerVisible] = useState<boolean>(true);
   const [first, setIsFirst] = useState<boolean>(true);
 
@@ -46,7 +46,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
     shouldRender ? (
       <div className={popupClasses}>
         <Transition
-          interval={interval}
+          interval={600}
           visible={isInnerVisible}
           className="w-popup-mask-wrapper"
           {...maskPosition}
@@ -56,7 +56,7 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
         <div className="w-popup-content" data-testid={props.position}>
           <Transition
             className={`w-pop-content-wrapper-${props.position}`}
-            interval={interval}
+            interval={600}
             visible={isInnerVisible}
             {...contentPosition[props.position]}
           >
