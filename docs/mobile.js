@@ -8,6 +8,7 @@ import PopupExample from './components/Main/PopupExample';
 import GridExample from './components/Main/GridExample';
 import FormExample from './components/Main/FormExample';
 import MessageExample from './components/Main/MessageExample';
+import PlayerExample from './components/Main/PlayerExample';
 
 
 const Mobile = () => {
@@ -20,6 +21,7 @@ const Mobile = () => {
       <Route path="/grid" component={GridExample} />
       <Route path="/form" component={FormExample} />
       <Route path="/message" component={MessageExample} />
+      <Route path="/player" component={PlayerExample} />
     </HashRouter>
   )
 };
