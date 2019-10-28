@@ -1,7 +1,9 @@
 import './index.scss'
 import * as React from "react";
-import './loading.svg'
-import sc from '../utils/classname'
+import './loading.svg';
+import './play.svg';
+import './pause.svg';
+import sc from '../utils/classname';
 
 interface IconProps extends React.SVGAttributes<SVGElement> {
     name?: string;
