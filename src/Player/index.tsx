@@ -95,7 +95,9 @@ const Player: React.FC<PlayerProps> = (props) => {
 
   return (
     <div className={sc('w-player-wrapper', className)}>
-     
+      <div className={`w-player-mask ${musicStatus ? 'active' : ''}`} style={{backgroundImage: `url(${cover})`}} />
+      <div className="w-player-icon-mask" />
+      <Icon name={musicStatus ? 'pause' : 'play'} />
       <svg className="w-player-svg" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
         <circle cx="35" cy="35" r="35" fill="#C2C2C4" />
         <path d={position}
