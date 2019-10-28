@@ -55,7 +55,8 @@ const Aside = (props) => {
     { path: 'grid', name: 'grid 栅格布局' },
     { path: 'form', name: 'form 表单' },
     { path: 'message', name: 'message 消息提示' },
-    { path: 'player', name: 'player 音乐播放器' }
+    { path: 'player', name: 'player 音乐播放器' },
+    { path: 'popover', name: 'popover 浮层' }
   ];
 
   return (

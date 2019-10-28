@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, useRef, EventHandler } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CSSProperties, FunctionComponent } from 'react';
 import sc from '../utils/classname';
 import { pipe } from '../utils/fp';
@@ -15,87 +15,76 @@ interface TransitionProps {
   className?: string;
 }
 
+let timer: any = null;
+
 const Transition: FunctionComponent<TransitionProps> = (props) => {
   const divEl = useRef<null | HTMLDivElement>(null);
-  const [prevStyle, saveStyle] = useState<CSSProperties>({});
   const childRef = useRef<null | HTMLElement>(null);
   const [composedStyle, setStyle] = useState<CSSProperties>({});
   const [shouldRender, setShouldRender] = useState<boolean>(false);
   const [hasRendered, setHasRendered] = useState<boolean>(false);
+  const [step, setStep] = useState<1 | 2>(1);
 
   const child = React.Children.only(props.children) as React.ReactElement;
 
   useEffect(() => {
-    if (props.visible && !hasRendered) {
-      setShouldRender(true);
-      setHasRendered(true);
-      return;
+    if (divEl && divEl.current) {
+      setHasRendered(true)
     }
+  })
 
-    if (!shouldRender) {
-      return;
-    }
-
-    saveStyle(child.props.style);
+  useEffect(() => {
+    const {
+      beforeEnter = {},
+      afterEnter = {},
+      beforeLeave = {},
+      afterLeave = {},
+      visible
+    } = props;
     let prev = {}
     if (typeof child.props.style === 'object') {
       prev = JSON.parse(JSON.stringify(child.props.style));
     }
-    const { visible, beforeEnter, beforeLeave } = props;
-    const presetStyle = productStyle(
-      prev,
-      visible ? beforeEnter : beforeLeave
-    );
 
-    const rePaintDiv = rePainter(divEl.current as HTMLDivElement);
+    visible && setShouldRender(true)
 
-    const beforeStyleSetter = pipe(presetStyle, setStyle);
-    beforeStyleSetter()
-    rePaintDiv();
-
-    let timer1: any = null;
-    let timer2: any = null;
-    timer1 = setTimeout(() => {
-      beforeStyleSetter(visible ?
-        { ...{ transition: `all ${props.interval}ms` }, ...props.afterEnter } :
-        { ...{ transition: `all ${props.interval}ms` }, ...props.afterLeave }
-      );
-
-      if (childRef && childRef.current) {
-        timer2 = setTimeout(() => {
-          if (visible) {
-            setStyle(prevStyle);
-          } else {
-            setHasRendered(false);
-            setShouldRender(false);
-          }
-
-        }, props.interval)
-      }
-    }, 0)
-    return () => {
-      clearTimeout(timer1)
-      clearTimeout(timer2)
+    if (visible && !hasRendered) {
+      return;
     }
 
-  }, [shouldRender, props.visible, hasRendered]);
+    if (divEl && divEl.current) {
+      const preset = beStyleStr(
+        (visible ? beforeEnter : beforeLeave) || {}
+      )
+      divEl.current.style.cssText = preset;
+      divEl && divEl.current && divEl.current.getBoundingClientRect();
 
-  function productStyle(
-    base: CSSProperties = {},
-    active: CSSProperties = {},
-    before: CSSProperties = {}
-  ) {
-    const presetStyles = [base, active, before];
+      const interval = props.interval || 300
+      const after = beStyleStr(
+        (visible ? afterEnter : afterLeave) || {}, {
+        transition: `all ${interval}ms`
+      })
+      divEl.current.style.cssText = after;
+      setTimeout(() => {
+        setStyle(prev);
+        if (!visible) {
+          setStyle(prev);
+          setShouldRender(false);
+        }
+      }, props.interval)
+    }
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [props.visible, hasRendered, shouldRender])
 
-    return function composeStyle(styles: CSSProperties = {}) {
-      return Object.assign({}, ...presetStyles, styles);
-    };
-  }
-
-  function rePainter(el: HTMLDivElement) {
-    return function inner() {
-      el.getBoundingClientRect();
-    };
+  function beStyleStr(...arr: Array<CSSProperties>) {
+    return arr.reduce((acc: string, cur: CSSProperties) => {
+      Object.keys(cur).forEach((key: keyof CSSProperties) => {
+        acc += `${key}: ${cur[key]};`
+      })
+      return acc;
+    }, '')
   }
 
   return shouldRender ? (

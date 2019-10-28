@@ -10,6 +10,7 @@ import FormExample from './components/Main/FormExample';
 import MessageExample from './components/Main/MessageExample';
 import PlayerExample from './components/Main/PlayerExample';
 
+import PopoverExample from './components/Main/PopoverExample';
 
 const Mobile = () => {
   return (
@@ -22,6 +23,7 @@ const Mobile = () => {
       <Route path="/form" component={FormExample} />
       <Route path="/message" component={MessageExample} />
       <Route path="/player" component={PlayerExample} />
+      <Route path="/popover" component={PopoverExample} />
     </HashRouter>
   )
 };
