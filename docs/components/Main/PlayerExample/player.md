@@ -25,3 +25,7 @@
 ### color
 
 进度条的颜色，默认红色
+
+```
+  <Player src="xxx" cover="xxx" />
+```
