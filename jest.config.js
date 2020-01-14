@@ -25,6 +25,7 @@ module.exports = {
   transform: {
     "^.+unit\\.(js|jsx)$": "babel-jest",
     '^.+\\.(ts|tsx)$': 'ts-jest',
+    "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx"
   },
   setupFilesAfterEnv: ["<rootDir>/test/setupTests.js"],
 }

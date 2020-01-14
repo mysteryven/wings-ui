@@ -2,7 +2,6 @@ import './index.scss';
 import * as React from 'react';
 import play from './play.svg';
 import pause from './pause.svg';
-import sc from '../utils/classname';
 import loading from './loading.svg';
 
 interface ImgUrl {

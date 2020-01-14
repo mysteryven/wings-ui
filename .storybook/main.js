@@ -1,8 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  stories: ['../stories/**/*.stories.js'],
-  addons: ['@storybook/addon-actions', '@storybook/addon-links'],
+  stories: ['../stories/**/*.stories.(js|mdx)'],
+  addons: [
+    '@storybook/addon-actions',
+    '@storybook/addon-links',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+        babelOptions: {},
+      },
+    },
+  ],
   webpack: async config => {
     // do mutation to the config
     config.module.rules = config.module.rules.map(rule => {
