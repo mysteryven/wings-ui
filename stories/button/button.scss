@@ -1,0 +1,16 @@
+.buttonWrapper {
+  margin: 4px 0px 16px 0px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  .item {
+    margin-right: 10px;
+    margin-bottom: 4px;
+  }
+}
+
+p {
+  margin: 4px 8px 8px 0px;
+  font-size: 12px;
+  color: grey;
+}

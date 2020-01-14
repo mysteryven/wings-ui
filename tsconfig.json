@@ -29,11 +29,20 @@
       ],
       "components/*": [
         "components/*"
-      ]
+      ],
+      "*": ["types/*"]
     },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ]
   },
   "include": [
-    "lib/**/*",
+    "src/**/*",
+    "types/*"
+  ],
+  "files": [
+    "types/custom.d.ts"
   ],
   "exclude": [
     "node_modules",

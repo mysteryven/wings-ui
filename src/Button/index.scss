@@ -1,53 +1,76 @@
-$grey: #ddd;
-$border-radius: 2px;
-$primary: #1989fa;
+$grey: #eff3f6;
+$border-radius: 3px;
+$primary: #28a745;
 $warning: #ff4444;
 
 .w-button {
-    padding: 0.4em 0.6em;
-    position: relative; 
-    background-color: white;
-    outline: none;
-    border-radius: $border-radius;
-    border: 1px solid $grey;
-    &:active:not(.w-loading) {
-        background-color: darken($color: $grey, $amount: 10)
+  color: #24292e;
+  padding: 0.5em 0.8em;
+  border: 1px solid rgba(27, 31, 35, .2);
+  position: relative;
+  background-color: #eff3f6;
+  background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+  outline: none;
+  border-radius: $border-radius;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active:not(.w-loading) {
+    background-color: darken($color: $grey, $amount: 10);
+    background-image: none;
+  }
+
+  &.w-disabled {
+    background-color: #eff3f6;
+    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+    color: lighten(#24292e, 2%);
+    cursor: not-allowed;
+
+    &:active {
+      background-color: $grey;
     }
+  }
+
+  &.w-full {
+    width: 100%;
+  }
+
+  &.primary {
+    background-color: $primary;
+    color: white;
+    border: none;
+    background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+
+    &:active:not(.w-loading):not(.w-disabled) {
+      background-color: darken($color: $primary, $amount: 10);
+    }
+
     &.w-disabled {
-        background: $grey;
-        color: white;
-        cursor: not-allowed;
-        &:active {
-            background-color: $grey;
-        }
+      background-color: darken($color: $primary, $amount: 4);
+      background-image: none;
     }
-    &.w-full {
-        width: 100%;
+  }
+
+  &.warning {
+    background-color: $warning;
+    color: white;
+    background-image: linear-gradient(-180deg,#de4450,#cb2431 90%);
+
+    &:active:not(.w-loading):not(.w-disabled) {
+      background-color: darken($color: $warning, $amount: 20);
+      background-image: none;
     }
-    &.primary {
-       background-color: $primary; 
-       color: white;
-       border: none;
-       &:active:not(.w-loading):not(.w-disabled) {
-         background-color: darken($color: $primary, $amount: 10)
-       }
-       &.w-disabled {
-         background-color: lighten($color: $primary, $amount: 20)
-       }
+
+    &.w-disabled {
+      background-color: darken($warning, 30);
+      background-image: none;
     }
-    &.warning {
-       background-color: $warning; 
-       color: white;
-       border: none;
-       &:active:not(.w-loading):not(.w-disabled) {
-        background-color: darken($color: $warning, $amount: 20)
-       }
-        &.w-disabled {
-         background-color: lighten($color: $warning, $amount: 10)
-       }
-    }
-    
+  }
+
 }
+
 .w-loading-icon-wrapper {
   position: absolute;
   top: 0;

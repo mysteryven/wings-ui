@@ -1,21 +1,33 @@
-import './index.scss'
-import * as React from "react";
-import './loading.svg';
-import './play.svg';
-import './pause.svg';
+import './index.scss';
+import * as React from 'react';
+import play from './play.svg';
+import pause from './pause.svg';
 import sc from '../utils/classname';
+import loading from './loading.svg';
 
-interface IconProps extends React.SVGAttributes<SVGElement> {
-    name?: string;
+interface ImgUrl {
+    loading: string;
+    pause: string;
+    play: string;
+}
+
+const imgUrls = {
+    loading,
+    pause,
+    play
+};
+
+interface IconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+    name?: 'loading' | 'pause' | 'play';
 }
 
 const Icon: React.FunctionComponent<IconProps> = (props) => {
-    const { className, name, ...restProps } = props;
+    const {name, ...restProps} = props;
     return (
-        <svg className={sc('w-svg', className)} {...restProps} >
-            <use xlinkHref={`#${name}`} />
-        </svg>
+        <div>
+            <img src={name && imgUrls[name]} {...restProps}  />
+        </div>
     );
 };
 
-export default Icon
+export default Icon;

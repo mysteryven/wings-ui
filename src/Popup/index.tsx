@@ -4,7 +4,6 @@ import * as ReactDOM from 'react-dom';
 import './index.scss';
 import Transition from '../Transition';
 import sc from '../utils/classname';
-import content from '../../types/custom';
 
 interface PopupProps extends HTMLDivElement {
   visible: boolean;

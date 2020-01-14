@@ -5,9 +5,7 @@ import Popup from './index';
 
 const setup = (props = {}) => {
   return (
-    <Popup {...props}>
-      <div>Hello, world!</div>
-    </Popup>
+   <div/>
   );
 };
 

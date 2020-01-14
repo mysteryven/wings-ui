@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = Object.assign({}, base, {
     mode: 'development', //production
     entry: {
-        'wen-design': './docs/index.js'
+        'wen-design': './src/index.js'
     },
     plugins: [
         new HtmlWebpackPlugin({
