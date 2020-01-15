@@ -16,8 +16,8 @@ type PositionItem = string | number;
 interface Position {
   'top': {
     left: PositionItem,
-    bottom: PositionItem
-  },
+    top: PositionItem
+  };
   'bottom': {
     left: PositionItem,
     top: PositionItem
@@ -47,18 +47,18 @@ const Popover: React.FC<PopoverProps> = (props) => {
 
   useEffect(() => {
     if (triggerEl && triggerEl.current && contentEl && contentEl.current) {
-      let { left, top, width, height, bottom } = triggerEl.current.getBoundingClientRect();
-      let { width: contentWidth } = contentEl.current.getBoundingClientRect();
+      const { left, top, width, bottom, height } = triggerEl.current.getBoundingClientRect();
+      const { width: contentWidth, height: contentHeight } = contentEl.current.getBoundingClientRect();
 
-      let positions: Position = {
+      const positions: Position = {
         top: {
-          left: left + window.scrollX - (contentWidth - width) / 2,
-          bottom: document.documentElement.scrollHeight - top + 8
+          left: left + window.scrollX - (contentWidth - width + 4) / 2,
+          top: bottom + window.scrollY - (contentHeight + height)
         },
         bottom: {
           left: left + window.scrollX - (contentWidth - width) / 2,
-          top: bottom + window.scrollY 
-        } 
+          top: bottom + window.scrollY
+        }
       }
 
       setOffset(positions[position]);
@@ -69,15 +69,15 @@ const Popover: React.FC<PopoverProps> = (props) => {
     return () => {
       document.removeEventListener('click', onDocumentClick);
       clearTimeout(timer);
-    }
+    };
   }, [shouldRender])
 
   function onTriggerClick() {
-    props.type !== "longPress" && setVisible(!isVisible)
+    props.type !== 'longPress' && setVisible(!isVisible)
   }
 
   function onTriggerTouchStart() {
-    props.type === "longPress" && count(props.interval || 300);
+    props.type === 'longPress' && count(props.interval || 300);
   }
 
   function count(time: number) {
@@ -93,7 +93,7 @@ const Popover: React.FC<PopoverProps> = (props) => {
   function onDocumentClick(e: any) {
     if (
       isInner(contentEl) ||
-      props.type === "longPress" && isInner(triggerEl)
+      props.type === 'longPress' && isInner(triggerEl)
     ) {
       return;
     }
@@ -110,7 +110,7 @@ const Popover: React.FC<PopoverProps> = (props) => {
       {
         shouldRender && ReactDOM.createPortal(
           <div 
-            className={sc("w-popover-content", `w-popover-content-${position}`)} ref={contentEl} style={{
+            className={sc('w-popover-content', `w-popover-content-${position}`)} ref={contentEl} style={{
             ...offset,
             visibility: hasSetOffset ? 'visible' : 'hidden'
           }}>
