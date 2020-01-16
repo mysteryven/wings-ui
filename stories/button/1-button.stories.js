@@ -7,7 +7,12 @@ export default {
   component: Button,
 };
 
-export const buttons = () => {
+export const ButtonDoc = () => (
+  <Button>Hello</Button>
+)
+
+
+export const Buttons = () => {
   return (
     <div className={"buttonWrapper"}>
       <Button className={"item"}>Default</Button>
