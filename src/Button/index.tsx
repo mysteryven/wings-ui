@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {forwardRef, FunctionComponent, MouseEvent, useImperativeHandle, useRef} from 'react';
+import PropTypes from 'prop-types';
 import Icon from '../Icon';
 import sc from '../utils/classname';
 import './index.scss';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     theme?: 'primary' | 'default' | 'warning';
     onClick?: React.MouseEventHandler;
     className?: string;
@@ -48,6 +49,14 @@ const Button: FunctionComponent<ButtonProps> = (props, ref) => {
         </button>
     );
 };
+
+Button.propTypes = {
+    theme: PropTypes.oneOf(['default', 'primary']),
+    /**
+     When a button is in the loading state you can supply custom text
+     */
+    className: PropTypes.string
+}
 
 Button.defaultProps = {
     theme: 'default'

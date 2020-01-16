@@ -5,9 +5,10 @@ import './index.scss';
 import Transition from '../Transition';
 import sc from '../utils/classname';
 
-interface PopupProps extends HTMLDivElement {
+interface PopupProps {
   visible: boolean;
   position: 'bottom' | 'left';
+  className: string;
 }
 
 const Popup: React.FunctionComponent<PopupProps> = (props) => {
@@ -39,7 +40,6 @@ const Popup: React.FunctionComponent<PopupProps> = (props) => {
       setIsFirst(false)
     }
   }, [props.visible])
-
 
   const popupElement = (
     shouldRender ? (
@@ -98,7 +98,6 @@ const maskPosition = {
   },
 }
 
-
 interface ContentPositionItem {
   beforeEnter: CSSProperties;
   afterEnter: CSSProperties;
@@ -112,7 +111,7 @@ interface ContentPosition {
 }
 
 const contentPosition: ContentPosition = {
-  'bottom': {
+  bottom: {
     beforeEnter: {
       transform: 'translateY(100%)'
     },
@@ -126,7 +125,7 @@ const contentPosition: ContentPosition = {
       transform: 'translateY(100%)'
     }
   },
-  'left': {
+  left: {
     beforeEnter: {
       transform: 'translateX(-100%)'
     },
@@ -140,4 +139,4 @@ const contentPosition: ContentPosition = {
       transform: 'translateX(-100%)'
     }
   }
-}
+};
