@@ -17,6 +17,7 @@
     transition: all 300ms;
   } 
   .w-player-icon {
+    position: relative;
     z-index: 3;
     transition: all 300ms;
     visibility: hidden;
