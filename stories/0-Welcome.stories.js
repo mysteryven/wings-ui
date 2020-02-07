@@ -12,7 +12,6 @@ export const ToStorybook = () => (
     <div>
       主要的展示代码都在每个组件的 <code>docs</code> 这个 Tab 里面。
     </div>
-    <p>还在更新中...</p>
   </div>
 );
 
