@@ -1,14 +1,21 @@
-import React from 'react';
-import { linkTo } from '@storybook/addon-links';
-import { Welcome } from '@storybook/react/demo';
+import React from "react";
+import { linkTo } from "@storybook/addon-links";
+import { Welcome } from "@storybook/react/demo";
 
 export default {
-  title: 'Welcome',
-  component: Welcome,
+  title: "Welcome",
+  component: Welcome
 };
 
-export const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;
+export const ToStorybook = () => (
+  <div>
+    <div>
+      主要的展示代码都在每个组件的 <code>docs</code> 这个 Tab 里面。
+    </div>
+    <p>还在更新中...</p>
+  </div>
+);
 
 ToStorybook.story = {
-  name: 'to Storybook',
+  name: "简要说明"
 };
